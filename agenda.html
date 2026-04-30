@@ -216,3 +216,6 @@ function addMsg(r,t){aiMsgs.push({role:r,text:t});rAIMsgs();}
 async function sendAI(){const i=document.getElementById('ai-in'),t=i.value.trim();if(!t)return;i.value='';await procAI(t);}
 async function procAI(text){addMsg('user',text);const ts=new Date().toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric'});const ld=document.createElement('div');ld.style.cssText='color:#6C63FF;font-size:.85rem;margin-bottom:10px;padding-left:4px;';ld.textContent='Procesando...';document.getElementById('ai-msgs').appendChild(ld);
 try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:`Eres un asistente personal. Hoy es ${ts}. Si el usuario quiere agendar, responde con: <AGENDA>{"date":"YYYY-MM-DD","hour":"HH:MM","desc":"texto"}</AGENDA>. Reglas: mañana=día siguiente, el lunes/etc=próximo, sin fecha=hoy, sin hora=09:00, 3 tarde=1
+</script>
+</body>
+</html>
