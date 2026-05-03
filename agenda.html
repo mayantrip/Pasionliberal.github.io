@@ -35,7 +35,7 @@ button,input,textarea,select{font-family:'Nunito',sans-serif;cursor:pointer;}
 </head>
 <body>
 <div class="app">
-<div id="view-calendar" class="view active">
+  <div id="view-calendar" class="view active">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
     <button class="nb" onclick="changeMonth(-1)">‹</button>
     <div style="text-align:center;"><div id="mt" style="font-size:1.3rem;font-weight:800;letter-spacing:1px;"></div><div id="yt" style="font-size:.8rem;color:#7778aa;font-weight:600;"></div></div>
@@ -80,7 +80,14 @@ button,input,textarea,select{font-family:'Nunito',sans-serif;cursor:pointer;}
       <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
         <button id="rec-btn" onclick="toggleRec()" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#6C63FF,#a78bfa);border:none;color:#fff;font-size:1.2rem;display:flex;align-items:center;justify-content:center;">🎤</button>
         <span id="rec-st" style="font-size:.82rem;color:#888aaa;">Toca para grabar</span>
-<div id="view-notes" class="view">
+      </div>
+    </div>
+    <div id="act-preview" class="mr"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;"><button class="pb" onclick="addAct()">Agregar</button><button class="gb" onclick="hideAgForm()">Cancelar</button></div>
+  </div>
+  <button class="fab" id="ag-fab" onclick="showAgForm()">+</button>
+</div>
+  <div id="view-notes" class="view">
   <button class="bb" onclick="showView('calendar')">← Inicio</button>
   <div style="font-size:1.3rem;font-weight:800;margin-bottom:14px;">📝 Notas</div>
   <input type="text" id="ns" placeholder="Buscar..." class="is" style="margin-bottom:14px;" oninput="rNotes()"/>
@@ -153,7 +160,7 @@ button,input,textarea,select{font-family:'Nunito',sans-serif;cursor:pointer;}
   <div id="lb-c"></div>
 </div>
 </div>
-<script>
+  <script>
 const MN=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 let td=new Date(),cY=td.getFullYear(),cM=td.getMonth(),sD=null,sY=null,sM=null;
 let acts={},notes=[],alarms=[],editN=null,aiMsgs=[{role:"assistant",text:"¡Qué onda! Habla o escribe — agendo lo que me digas 🎙️"}];
@@ -207,4 +214,5 @@ function stopMic(){rec?.stop();listening=false;document.getElementById('mic-btn'
 loadData();rCal();rToday();setInterval(chkAlarms,10000);chkAlarms();
 </script>
 </body>
-</html>
+</html> 
+  
