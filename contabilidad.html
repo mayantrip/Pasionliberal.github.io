@@ -155,10 +155,7 @@ body{
 .modal{
   display:none;
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
+  top:0;left:0;right:0;bottom:0;
   background:rgba(0,0,0,0.9);
   z-index:2000;
   overflow-y:auto;
@@ -202,15 +199,8 @@ input,select{
   color:#fff;
   font-size:16px;
 }
-input:focus,select:focus{
-  outline:none;
-  border-color:var(--gold);
-}
-.tipo-selector{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-}
+input:focus,select:focus{outline:none;border-color:var(--gold);}
+.tipo-selector{display:flex;gap:10px;margin-bottom:15px;}
 .tipo-btn{
   flex:1;
   padding:15px;
@@ -222,21 +212,9 @@ input:focus,select:focus{
   cursor:pointer;
   transition:all 0.2s;
 }
-.tipo-btn.active.ingreso{
-  background:rgba(74,222,128,0.2);
-  border-color:var(--green);
-  color:var(--green);
-}
-.tipo-btn.active.gasto{
-  background:rgba(239,68,68,0.2);
-  border-color:var(--red);
-  color:var(--red);
-}
-.tipo-btn.active.transferencia{
-  background:rgba(212,175,55,0.2);
-  border-color:var(--gold);
-  color:var(--gold);
-}
+.tipo-btn.active.ingreso{background:rgba(74,222,128,0.2);border-color:var(--green);color:var(--green);}
+.tipo-btn.active.gasto{background:rgba(239,68,68,0.2);border-color:var(--red);color:var(--red);}
+.tipo-btn.active.transferencia{background:rgba(212,175,55,0.2);border-color:var(--gold);color:var(--gold);}
 .btn-guardar{
   width:100%;
   padding:16px;
@@ -271,76 +249,71 @@ input:focus,select:focus{
   padding:4px 10px;
   border-radius:20px;
 }
-.movimiento-monto{
-  font-size:20px;
-  font-weight:bold;
-}
+.movimiento-monto{font-size:20px;font-weight:bold;}
 .movimiento-monto.ingreso{color:var(--green);}
 .movimiento-monto.gasto{color:var(--red);}
 .movimiento-monto.transferencia{color:var(--gold);}
-.movimiento-detalle{
-  font-size:13px;
-  color:#aaa;
-  margin-top:5px;
-}
-.movimiento-fecha{
-  font-size:11px;
-  color:#666;
-  margin-top:8px;
-}
+.movimiento-detalle{font-size:13px;color:#aaa;margin-top:5px;}
+.movimiento-fecha{font-size:11px;color:#666;margin-top:8px;}
 .movimiento-acciones{
   position:absolute;
-  top:10px;
-  right:8px;
-  display:flex;
-  flex-direction:column;
-  gap:2px;
+  top:10px;right:8px;
+  display:flex;flex-direction:column;gap:2px;
 }
-.empty-state{
-  text-align:center;
-  padding:40px 20px;
-  opacity:0.5;
-}
+.empty-state{text-align:center;padding:40px 20px;opacity:0.5;}
 .foto-recibo{
-  width:100%;
-  max-height:200px;
-  object-fit:cover;
-  border-radius:10px;
-  margin-top:10px;
-  cursor:pointer;
-  transition:transform 0.2s;
+  width:100%;max-height:200px;object-fit:cover;
+  border-radius:10px;margin-top:10px;
+  cursor:pointer;transition:transform 0.2s;
 }
 .filtros{
-  display:flex;
-  gap:8px;
-  padding:0 15px 10px;
-  overflow-x:auto;
+  display:flex;gap:8px;
+  padding:0 15px 10px;overflow-x:auto;
 }
 .filtro-btn{
-  padding:8px 16px;
-  background:#1a1a1a;
-  border:1px solid var(--border);
-  border-radius:20px;
-  color:#888;
-  font-size:12px;
-  white-space:nowrap;
-  cursor:pointer;
+  padding:8px 16px;background:#1a1a1a;
+  border:1px solid var(--border);border-radius:20px;
+  color:#888;font-size:12px;white-space:nowrap;cursor:pointer;
 }
-.filtro-btn.active{
-  background:var(--gold);
-  color:#000;
-}
+.filtro-btn.active{background:var(--gold);color:#000;}
 .saldo-insuficiente{
-  background:rgba(239,68,68,0.1);
-  border:1px solid var(--red);
-  color:var(--red);
-  padding:12px;
-  border-radius:8px;
-  font-size:13px;
-  margin-bottom:15px;
-  display:none;
+  background:rgba(239,68,68,0.1);border:1px solid var(--red);
+  color:var(--red);padding:12px;border-radius:8px;
+  font-size:13px;margin-bottom:15px;display:none;
 }
 .saldo-insuficiente.active{display:block;}
+
+/* ===== CATEGORÍAS ===== */
+.cat-tabs{display:flex;gap:8px;margin-bottom:16px;}
+.cat-tab{
+  flex:1;padding:12px;background:#1a1a1a;
+  border:2px solid var(--border);border-radius:10px;
+  color:#666;font-size:13px;cursor:pointer;text-align:center;
+  transition:all 0.2s;
+}
+.cat-tab.active.ingreso{background:rgba(74,222,128,0.15);border-color:var(--green);color:var(--green);}
+.cat-tab.active.gasto{background:rgba(239,68,68,0.15);border-color:var(--red);color:var(--red);}
+.cat-grupo{
+  background:#0d0d0d;border:1px solid var(--border);
+  border-radius:10px;margin-bottom:10px;overflow:hidden;
+}
+.cat-padre-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 12px;background:#161616;
+}
+.cat-padre-nombre{font-size:14px;font-weight:500;}
+.cat-hijo-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:9px 12px 9px 26px;border-top:1px solid #1a1a1a;
+}
+.cat-hijo-nombre{font-size:13px;color:#aaa;}
+.cat-acciones{display:flex;gap:2px;}
+.modal-sub{
+  display:none;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.85);z-index:3000;overflow-y:auto;
+}
+.modal-sub.active{display:block;}
 </style>
 </head>
 <body>
@@ -348,6 +321,7 @@ input:focus,select:focus{
 <div class="header">
   <h1>💰 MAYAN TRIP</h1>
   <div class="header-actions">
+    <button class="btn-header" onclick="abrirModalCategorias()" title="Gestionar categorías">🏷️</button>
     <button class="btn-header" onclick="exportarDatos()" title="Exportar datos">📤</button>
     <label class="btn-header" title="Importar datos" style="margin:0;cursor:pointer;">
       📥<input type="file" id="fileImport" accept=".json" style="display:none" onchange="importarDatos(event)">
@@ -393,70 +367,57 @@ input:focus,select:focus{
 
 <button class="btn-fab" onclick="abrirModal()">+</button>
 
-<!-- Modal Movimiento -->
+<!-- ===== MODAL MOVIMIENTO ===== -->
 <div id="modalMovimiento" class="modal">
   <div class="modal-content">
     <div class="modal-header">
       <div class="modal-title" id="tituloModalMov">Nuevo Movimiento</div>
       <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
     </div>
-
-    <div class="tipo-selector">
+    <div class="tipo-selector" id="tipoSelectorMov">
       <button class="tipo-btn ingreso" onclick="setTipo('ingreso', this)">Ingreso</button>
       <button class="tipo-btn gasto" onclick="setTipo('gasto', this)">Gasto</button>
       <button class="tipo-btn transferencia" onclick="setTipo('transferencia', this)">Transferir</button>
     </div>
-
-    <div class="saldo-insuficiente" id="alertaSaldo">
-      ⚠️ Saldo insuficiente en cuenta origen
-    </div>
-
+    <div class="saldo-insuficiente" id="alertaSaldo">⚠️ Saldo insuficiente en cuenta origen</div>
     <div class="form-group" id="grupoOrigen" style="display:none;">
       <label>Desde (Origen)</label>
       <select id="origen"></select>
     </div>
-
     <div class="form-group" id="grupoDestino">
       <label>Hacia (Destino)</label>
       <select id="destino"></select>
     </div>
-
     <div class="form-group" id="grupoCategoria">
       <label>Categoría</label>
       <select id="categoria" onchange="cargarSubcategorias()"></select>
     </div>
-
     <div class="form-group" id="grupoSubcategoria">
       <label>Subcategoría (opcional)</label>
       <select id="subcategoria"></select>
     </div>
-
     <div class="form-group">
       <label>Monto</label>
       <input type="number" id="monto" placeholder="0.00" step="0.01">
     </div>
-
     <div class="form-group">
       <label>Concepto / Nota</label>
       <input type="text" id="concepto" placeholder="Ej: Tour García">
     </div>
-
     <div class="form-group">
       <label>Fecha</label>
       <input type="datetime-local" id="fecha">
     </div>
-
     <div class="form-group">
       <label>Foto del Recibo (opcional)</label>
       <input type="file" id="fotoRecibo" accept="image/*" capture="environment" onchange="previewFoto()">
       <img id="previewFoto" class="foto-recibo" style="display:none;">
     </div>
-
     <button class="btn-guardar" onclick="guardarMovimiento()">Guardar</button>
   </div>
 </div>
 
-<!-- Modal Cuenta -->
+<!-- ===== MODAL CUENTA ===== -->
 <div id="modalCuenta" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -475,72 +436,144 @@ input:focus,select:focus{
   </div>
 </div>
 
+<!-- ===== MODAL CATEGORÍAS ===== -->
+<div id="modalCategorias" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">🏷️ Categorías</div>
+      <button class="btn-cerrar" onclick="cerrarModalCategorias()">&times;</button>
+    </div>
+    <div class="cat-tabs">
+      <button class="cat-tab active ingreso" id="catTabIngreso" onclick="cambiarTipoCat('ingreso', this)">📈 Ingresos</button>
+      <button class="cat-tab gasto"          id="catTabGasto"   onclick="cambiarTipoCat('gasto',   this)">📉 Gastos</button>
+    </div>
+    <div id="listaCategorias"></div>
+    <button class="btn-nueva-cuenta" onclick="abrirFormCat(null, null)" style="margin-top:5px;">+ Nueva Categoría</button>
+  </div>
+</div>
+
+<!-- ===== MODAL FORM CATEGORÍA (sub-modal, z-index 3000) ===== -->
+<div id="modalFormCat" class="modal-sub">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title" id="tituloFormCat">Nueva Categoría</div>
+      <button class="btn-cerrar" onclick="cerrarFormCat()">&times;</button>
+    </div>
+    <div class="form-group">
+      <label>Nombre</label>
+      <input type="text" id="catNombre" placeholder="Ej: Ventas de Tours">
+    </div>
+    <div class="form-group">
+      <label>Categoría padre (opcional)</label>
+      <select id="catPadre"></select>
+    </div>
+    <button class="btn-guardar" onclick="guardarCategoria()">Guardar</button>
+  </div>
+</div>
+
 <script>
 // ==================== DATOS ====================
+const CATEGORIAS_DEFAULT = [
+  // ── INGRESOS ──────────────────────────────────────────────────
+  {id:'i1', nombre:'Ventas y Servicios',      tipo:'ingreso', padre:null},
+  {id:'i2', nombre:'Tours y Excursiones',     tipo:'ingreso', padre:'i1'},
+  {id:'i3', nombre:'Privados',                tipo:'ingreso', padre:'i1'},
+  {id:'i4', nombre:'Traslados',               tipo:'ingreso', padre:'i1'},
+  {id:'i5', nombre:'Renta de Equipo',         tipo:'ingreso', padre:'i1'},
+  {id:'i6', nombre:'Paquetes Turísticos',     tipo:'ingreso', padre:'i1'},
+  {id:'i7', nombre:'Snorkel / Buceo',         tipo:'ingreso', padre:'i1'},
+  {id:'i8', nombre:'Cenotes',                 tipo:'ingreso', padre:'i1'},
+  {id:'i9',  nombre:'Comisiones',             tipo:'ingreso', padre:null},
+  {id:'i10', nombre:'Agencias de Viaje',      tipo:'ingreso', padre:'i9'},
+  {id:'i11', nombre:'Hoteles',                tipo:'ingreso', padre:'i9'},
+  {id:'i12', nombre:'Plataformas Online',     tipo:'ingreso', padre:'i9'},
+  {id:'i13', nombre:'Recomendaciones',        tipo:'ingreso', padre:'i9'},
+  {id:'i14', nombre:'Propinas',               tipo:'ingreso', padre:null},
+  {id:'i15', nombre:'En Efectivo',            tipo:'ingreso', padre:'i14'},
+  {id:'i16', nombre:'Digital / Transferencia',tipo:'ingreso', padre:'i14'},
+  {id:'i17', nombre:'Ventas Directas',        tipo:'ingreso', padre:null},
+  {id:'i18', nombre:'Souvenirs',              tipo:'ingreso', padre:'i17'},
+  {id:'i19', nombre:'Fotografías',            tipo:'ingreso', padre:'i17'},
+  {id:'i20', nombre:'Alimentos y Bebidas',    tipo:'ingreso', padre:'i17'},
+  {id:'i21', nombre:'Financieros',            tipo:'ingreso', padre:null},
+  {id:'i22', nombre:'Intereses Bancarios',    tipo:'ingreso', padre:'i21'},
+  {id:'i23', nombre:'Rendimientos',           tipo:'ingreso', padre:'i21'},
+  {id:'i24', nombre:'Devolución de IVA',      tipo:'ingreso', padre:'i21'},
+  {id:'i25', nombre:'Otros Ingresos',         tipo:'ingreso', padre:null},
+  {id:'i26', nombre:'Reembolsos',             tipo:'ingreso', padre:'i25'},
+  {id:'i27', nombre:'Subsidios / Apoyos',     tipo:'ingreso', padre:'i25'},
+  {id:'i28', nombre:'Donaciones',             tipo:'ingreso', padre:'i25'},
+  {id:'i29', nombre:'Prestamos Recibidos',    tipo:'ingreso', padre:'i25'},
+  // ── GASTOS ────────────────────────────────────────────────────
+  {id:'g1', nombre:'Operación',              tipo:'gasto', padre:null},
+  {id:'g2', nombre:'Gasolina',              tipo:'gasto', padre:'g1'},
+  {id:'g3', nombre:'Mantenimiento',         tipo:'gasto', padre:'g1'},
+  {id:'g4', nombre:'Refacciones',           tipo:'gasto', padre:'g1'},
+  {id:'g5', nombre:'Lavado',               tipo:'gasto', padre:'g1'},
+  {id:'g6', nombre:'Peajes',               tipo:'gasto', padre:'g1'},
+  {id:'g7', nombre:'Estacionamiento',       tipo:'gasto', padre:'g1'},
+  {id:'g22', nombre:'Nómina',              tipo:'gasto', padre:null},
+  {id:'g23', nombre:'Sueldos',             tipo:'gasto', padre:'g22'},
+  {id:'g24', nombre:'Prestaciones',        tipo:'gasto', padre:'g22'},
+  {id:'g25', nombre:'Aguinaldo',           tipo:'gasto', padre:'g22'},
+  {id:'g26', nombre:'IMSS / Seguridad Social', tipo:'gasto', padre:'g22'},
+  {id:'g8',  nombre:'Administración',       tipo:'gasto', padre:null},
+  {id:'g9',  nombre:'Permisos',            tipo:'gasto', padre:'g8'},
+  {id:'g10', nombre:'Seguro',              tipo:'gasto', padre:'g8'},
+  {id:'g11', nombre:'Multas',              tipo:'gasto', padre:'g8'},
+  {id:'g12', nombre:'Contador',            tipo:'gasto', padre:'g8'},
+  {id:'g27', nombre:'Papelería y Oficina', tipo:'gasto', padre:'g8'},
+  {id:'g28', nombre:'Marketing',           tipo:'gasto', padre:null},
+  {id:'g29', nombre:'Redes Sociales',      tipo:'gasto', padre:'g28'},
+  {id:'g30', nombre:'Publicidad',          tipo:'gasto', padre:'g28'},
+  {id:'g31', nombre:'Diseño',             tipo:'gasto', padre:'g28'},
+  {id:'g32', nombre:'Servicios',           tipo:'gasto', padre:null},
+  {id:'g33', nombre:'Internet',            tipo:'gasto', padre:'g32'},
+  {id:'g34', nombre:'Telefonía',           tipo:'gasto', padre:'g32'},
+  {id:'g35', nombre:'Electricidad',        tipo:'gasto', padre:'g32'},
+  {id:'g36', nombre:'Agua',               tipo:'gasto', padre:'g32'},
+  {id:'g37', nombre:'Renta de Local',      tipo:'gasto', padre:'g32'},
+  {id:'g13', nombre:'Personal',            tipo:'gasto', padre:null},
+  {id:'g14', nombre:'Comida',             tipo:'gasto', padre:'g13'},
+  {id:'g15', nombre:'Ocio',              tipo:'gasto', padre:'g13'},
+  {id:'g16', nombre:'Ropa',              tipo:'gasto', padre:'g13'},
+  {id:'g17', nombre:'Salud',             tipo:'gasto', padre:'g13'},
+  {id:'g18', nombre:'Finanzas',            tipo:'gasto', padre:null},
+  {id:'g19', nombre:'Deudas',             tipo:'gasto', padre:'g18'},
+  {id:'g20', nombre:'Intereses',           tipo:'gasto', padre:'g18'},
+  {id:'g21', nombre:'Comisiones Bancarias',tipo:'gasto', padre:'g18'}
+];
+
 let datos = {
   cuentas:[
-    {id:'efectivo',nombre:'💵 Efectivo',saldo:0},
-    {id:'bbva',nombre:'🏦 BBVA',saldo:0},
-    {id:'santander',nombre:'🏦 Santander',saldo:0},
-    {id:'oxxo',nombre:'🟡 Spin Oxxo',saldo:0},
-    {id:'coppel',nombre:'🔵 BanCoppel',saldo:0},
-    {id:'clip',nombre:'💳 Clip',saldo:0}
+    {id:'efectivo', nombre:'💵 Efectivo',   saldo:0},
+    {id:'bbva',     nombre:'🏦 BBVA',       saldo:0},
+    {id:'santander',nombre:'🏦 Santander',  saldo:0},
+    {id:'oxxo',     nombre:'🟡 Spin Oxxo',  saldo:0},
+    {id:'coppel',   nombre:'🔵 BanCoppel',  saldo:0},
+    {id:'clip',     nombre:'💳 Clip',       saldo:0}
   ],
   movimientos:[],
-  categorias:[
-    // INGRESOS
-    {id:'i1',nombre:'Clientes',tipo:'ingreso',padre:null},
-    {id:'i2',nombre:'Tours',tipo:'ingreso',padre:'i1'},
-    {id:'i3',nombre:'Privados',tipo:'ingreso',padre:'i1'},
-    {id:'i4',nombre:'Traslados',tipo:'ingreso',padre:'i1'},
-    {id:'i5',nombre:'Extras',tipo:'ingreso',padre:null},
-    {id:'i6',nombre:'Propinas',tipo:'ingreso',padre:'i5'},
-    {id:'i7',nombre:'Comisiones',tipo:'ingreso',padre:'i5'},
-    {id:'i8',nombre:'Otros',tipo:'ingreso',padre:null},
-    // GASTOS OPERACIÓN
-    {id:'g1',nombre:'Operación',tipo:'gasto',padre:null},
-    {id:'g2',nombre:'Gasolina',tipo:'gasto',padre:'g1'},
-    {id:'g3',nombre:'Mantenimiento',tipo:'gasto',padre:'g1'},
-    {id:'g4',nombre:'Refacciones',tipo:'gasto',padre:'g1'},
-    {id:'g5',nombre:'Lavado',tipo:'gasto',padre:'g1'},
-    {id:'g6',nombre:'Peajes',tipo:'gasto',padre:'g1'},
-    {id:'g7',nombre:'Estacionamiento',tipo:'gasto',padre:'g1'},
-    // GASTOS ADMIN
-    {id:'g8',nombre:'Administración',tipo:'gasto',padre:null},
-    {id:'g9',nombre:'Permisos',tipo:'gasto',padre:'g8'},
-    {id:'g10',nombre:'Seguro',tipo:'gasto',padre:'g8'},
-    {id:'g11',nombre:'Multas',tipo:'gasto',padre:'g8'},
-    {id:'g12',nombre:'Contador',tipo:'gasto',padre:'g8'},
-    // GASTOS PERSONALES
-    {id:'g13',nombre:'Personal',tipo:'gasto',padre:null},
-    {id:'g14',nombre:'Comida',tipo:'gasto',padre:'g13'},
-    {id:'g15',nombre:'Ocio',tipo:'gasto',padre:'g13'},
-    {id:'g16',nombre:'Ropa',tipo:'gasto',padre:'g13'},
-    {id:'g17',nombre:'Salud',tipo:'gasto',padre:'g13'},
-    // FINANZAS
-    {id:'g18',nombre:'Finanzas',tipo:'gasto',padre:null},
-    {id:'g19',nombre:'Deudas',tipo:'gasto',padre:'g18'},
-    {id:'g20',nombre:'Intereses',tipo:'gasto',padre:'g18'},
-    {id:'g21',nombre:'Comisiones',tipo:'gasto',padre:'g18'}
-  ]
+  categorias: CATEGORIAS_DEFAULT
 };
 
-let tipoActual = 'ingreso';
-let filtroActual = 'todos';
-let fotoBase64 = null;
-let editandoId = null;
-let editandoCuentaId = null;
+let tipoActual      = 'ingreso';
+let filtroActual    = 'todos';
+let fotoBase64      = null;
+let editandoId      = null;
+let editandoCuentaId= null;
+let tipoCatActual   = 'ingreso';
+let editandoCatId   = null;
 
 // ==================== LOCALSTORAGE ====================
 function guardarDatos(){
   localStorage.setItem('finanzasMayanTrip', JSON.stringify(datos));
 }
-
 function cargarDatos(){
   const guardado = localStorage.getItem('finanzasMayanTrip');
   if(guardado){
     const parsed = JSON.parse(guardado);
-    if(!parsed.categorias) parsed.categorias = datos.categorias;
+    if(!parsed.categorias || parsed.categorias.length === 0) parsed.categorias = CATEGORIAS_DEFAULT;
     datos = parsed;
   }
 }
@@ -548,33 +581,25 @@ function cargarDatos(){
 // ==================== EXPORTAR / IMPORTAR ====================
 function exportarDatos(){
   const blob = new Blob([JSON.stringify(datos, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
   a.download = 'mayan-trip-' + new Date().toISOString().slice(0,10) + '.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(a.href);
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(a.href);
 }
-
 function importarDatos(e){
-  const file = e.target.files[0];
-  if(!file) return;
+  const file = e.target.files[0]; if(!file) return;
   const reader = new FileReader();
   reader.onload = function(ev){
     try {
-      const importado = JSON.parse(ev.target.result);
-      if(!importado.cuentas || !importado.movimientos) throw new Error('Formato inválido');
-      if(!importado.categorias) importado.categorias = datos.categorias;
-      datos = importado;
+      const imp = JSON.parse(ev.target.result);
+      if(!imp.cuentas || !imp.movimientos) throw new Error();
+      if(!imp.categorias || imp.categorias.length === 0) imp.categorias = CATEGORIAS_DEFAULT;
+      datos = imp;
       guardarDatos();
-      renderCuentas();
-      renderMovimientos();
-      renderReportes();
+      renderCuentas(); renderMovimientos(); renderReportes();
       alert('✅ Datos importados correctamente');
-    } catch(err) {
-      alert('❌ Error al importar: archivo inválido');
-    }
+    } catch { alert('❌ Error al importar: archivo inválido'); }
     e.target.value = '';
   };
   reader.readAsText(file);
@@ -586,9 +611,9 @@ function cambiarTab(tab, el){
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('section-' + tab).classList.add('active');
-  if(tab === 'cuentas') renderCuentas();
+  if(tab === 'cuentas')     renderCuentas();
   if(tab === 'movimientos') renderMovimientos();
-  if(tab === 'reportes') renderReportes();
+  if(tab === 'reportes')    renderReportes();
 }
 
 // ==================== MODAL MOVIMIENTO ====================
@@ -596,25 +621,20 @@ function abrirModal(){
   document.getElementById('tituloModalMov').textContent = editandoId ? 'Editar Movimiento' : 'Nuevo Movimiento';
   document.getElementById('modalMovimiento').classList.add('active');
   document.body.style.overflow = 'hidden';
-
   if(!editandoId){
     const ahora = new Date();
     ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
     document.getElementById('fecha').value = ahora.toISOString().slice(0,16);
   }
-
   cargarCuentas();
   setTipo(tipoActual);
 }
-
 function cerrarModal(){
   document.getElementById('modalMovimiento').classList.remove('active');
   document.body.style.overflow = '';
-  editandoId = null;
-  tipoActual = 'ingreso';
+  editandoId = null; tipoActual = 'ingreso';
   limpiarFormulario();
 }
-
 function limpiarFormulario(){
   document.getElementById('monto').value = '';
   document.getElementById('concepto').value = '';
@@ -624,17 +644,14 @@ function limpiarFormulario(){
   document.getElementById('alertaSaldo').classList.remove('active');
 }
 
-// FIX: acepta el elemento botón como parámetro para evitar depender del event global
 function setTipo(tipo, el){
   tipoActual = tipo;
-  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
-  const btn = el || document.querySelector('.tipo-btn.' + tipo);
+  document.querySelectorAll('#tipoSelectorMov .tipo-btn').forEach(b => b.classList.remove('active'));
+  const btn = el || document.querySelector('#tipoSelectorMov .tipo-btn.' + tipo);
   if(btn) btn.classList.add('active');
-
   const grupoOrigen  = document.getElementById('grupoOrigen');
   const grupoDestino = document.getElementById('grupoDestino');
   const labelDestino = document.querySelector('#grupoDestino label');
-
   if(tipo === 'ingreso'){
     grupoOrigen.style.display  = 'none';
     grupoDestino.style.display = 'block';
@@ -649,27 +666,24 @@ function setTipo(tipo, el){
     document.querySelector('#grupoOrigen label').textContent = 'Desde (Origen)';
     labelDestino.textContent   = 'Hacia (Destino)';
   }
-
   cargarCategorias();
 }
 
-// ==================== CUENTAS (selector en modal) ====================
+// ==================== CUENTAS ====================
 function cargarCuentas(){
   let html = '<option value="">Selecciona...</option>';
   datos.cuentas.forEach(c => {
     html += `<option value="${c.id}">${c.nombre} - $${c.saldo.toFixed(2)}</option>`;
   });
-  document.getElementById('origen').innerHTML = html;
+  document.getElementById('origen').innerHTML  = html;
   document.getElementById('destino').innerHTML = html;
 }
-
 function renderCuentas(){
   const contenedor = document.getElementById('listaCuentas');
   let total = 0;
-
   contenedor.innerHTML = datos.cuentas.map(c => {
     total += c.saldo;
-    const clase = c.saldo >= 0 ? 'positive' : 'negative';
+    const clase    = c.saldo >= 0 ? 'positive' : 'negative';
     const tieneMov = datos.movimientos.some(m => m.origen === c.id || m.destino === c.id);
     return `
       <div class="cuenta-item">
@@ -679,10 +693,8 @@ function renderCuentas(){
           <button class="btn-icono" onclick="abrirModalCuenta('${c.id}')" title="Editar">✏️</button>
           ${!tieneMov ? `<button class="btn-icono" onclick="eliminarCuenta('${c.id}')" title="Eliminar">🗑</button>` : ''}
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
-
   document.getElementById('totalBalance').textContent = '$' + total.toFixed(2);
 }
 
@@ -690,7 +702,6 @@ function renderCuentas(){
 function abrirModalCuenta(id){
   editandoCuentaId = id;
   document.getElementById('tituloModalCuenta').textContent = id ? 'Editar Cuenta' : 'Nueva Cuenta';
-
   if(id){
     const c = datos.cuentas.find(c => c.id === id);
     document.getElementById('cuentaNombre').value = c.nombre;
@@ -699,92 +710,171 @@ function abrirModalCuenta(id){
     document.getElementById('cuentaNombre').value = '';
     document.getElementById('cuentaSaldo').value  = '';
   }
-
   document.getElementById('modalCuenta').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-
 function cerrarModalCuenta(){
   document.getElementById('modalCuenta').classList.remove('active');
   document.body.style.overflow = '';
   editandoCuentaId = null;
 }
-
 function guardarCuenta(){
   const nombre = document.getElementById('cuentaNombre').value.trim();
   const saldo  = parseFloat(document.getElementById('cuentaSaldo').value) || 0;
-
   if(!nombre){ alert('Ingresa el nombre de la cuenta'); return; }
-
   if(editandoCuentaId){
     const c = datos.cuentas.find(c => c.id === editandoCuentaId);
-    c.nombre = nombre;
-    c.saldo  = saldo;
+    c.nombre = nombre; c.saldo = saldo;
   } else {
     datos.cuentas.push({ id: Date.now().toString(), nombre, saldo });
   }
-
-  guardarDatos();
-  cerrarModalCuenta();
-  renderCuentas();
+  guardarDatos(); cerrarModalCuenta(); renderCuentas();
 }
-
 function eliminarCuenta(id){
   const c = datos.cuentas.find(c => c.id === id);
   if(!confirm(`¿Eliminar la cuenta "${c.nombre}"?`)) return;
   datos.cuentas = datos.cuentas.filter(c => c.id !== id);
-  guardarDatos();
-  renderCuentas();
+  guardarDatos(); renderCuentas();
 }
 
-// ==================== CATEGORÍAS ====================
+// ==================== CATEGORÍAS (selector en modal movimiento) ====================
 function cargarCategorias(){
   const grupoCategoria    = document.getElementById('grupoCategoria');
   const grupoSubcategoria = document.getElementById('grupoSubcategoria');
-
-  // FIX: transferencias no necesitan categoría
   if(tipoActual === 'transferencia'){
     grupoCategoria.style.display    = 'none';
     grupoSubcategoria.style.display = 'none';
     return;
   }
-
   grupoCategoria.style.display    = 'block';
   grupoSubcategoria.style.display = 'block';
-
   const select = document.getElementById('categoria');
   const cats   = datos.categorias.filter(c => c.tipo === tipoActual && !c.padre);
-
   select.innerHTML = '<option value="">Selecciona...</option>';
-  cats.forEach(c => {
-    select.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
-  });
-
+  cats.forEach(c => { select.innerHTML += `<option value="${c.id}">${c.nombre}</option>`; });
   cargarSubcategorias();
 }
-
 function cargarSubcategorias(){
   const catId  = document.getElementById('categoria').value;
   const select = document.getElementById('subcategoria');
   const subs   = datos.categorias.filter(c => c.padre === catId);
-
   select.innerHTML = '<option value="">-- Ninguna --</option>';
-  subs.forEach(s => {
-    select.innerHTML += `<option value="${s.id}">${s.nombre}</option>`;
-  });
+  subs.forEach(s => { select.innerHTML += `<option value="${s.id}">${s.nombre}</option>`; });
+}
+
+// ==================== MODAL CATEGORÍAS (gestión) ====================
+function abrirModalCategorias(){
+  tipoCatActual = 'ingreso';
+  document.getElementById('catTabIngreso').classList.add('active');
+  document.getElementById('catTabGasto').classList.remove('active');
+  document.getElementById('modalCategorias').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderCategorias();
+}
+function cerrarModalCategorias(){
+  document.getElementById('modalCategorias').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function cambiarTipoCat(tipo, el){
+  tipoCatActual = tipo;
+  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderCategorias();
+}
+function renderCategorias(){
+  const contenedor = document.getElementById('listaCategorias');
+  const padres     = datos.categorias.filter(c => c.tipo === tipoCatActual && !c.padre);
+  if(padres.length === 0){
+    contenedor.innerHTML = '<div class="empty-state">Sin categorías. Agrega una.</div>';
+    return;
+  }
+  contenedor.innerHTML = padres.map(padre => {
+    const hijos = datos.categorias.filter(c => c.padre === padre.id);
+    return `
+      <div class="cat-grupo">
+        <div class="cat-padre-row">
+          <span class="cat-padre-nombre">${padre.nombre}</span>
+          <div class="cat-acciones">
+            <button class="btn-icono" onclick="abrirFormCat('${padre.id}', null)" title="Editar">✏️</button>
+            <button class="btn-icono" onclick="abrirFormCat(null, '${padre.id}')" title="+ Subcategoría" style="font-size:18px;opacity:0.5;">⊕</button>
+            <button class="btn-icono" onclick="eliminarCategoria('${padre.id}')" title="Eliminar">🗑</button>
+          </div>
+        </div>
+        ${hijos.map(h => `
+          <div class="cat-hijo-row">
+            <span class="cat-hijo-nombre">↳ ${h.nombre}</span>
+            <div class="cat-acciones">
+              <button class="btn-icono" onclick="abrirFormCat('${h.id}', null)" title="Editar">✏️</button>
+              <button class="btn-icono" onclick="eliminarCategoria('${h.id}')" title="Eliminar">🗑</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+  }).join('');
+}
+
+// ==================== FORM CATEGORÍA (sub-modal) ====================
+function abrirFormCat(id, padrePresel){
+  editandoCatId = id;
+  const padres = datos.categorias.filter(c => c.tipo === tipoCatActual && !c.padre && c.id !== id);
+  const select = document.getElementById('catPadre');
+  select.innerHTML = '<option value="">-- Ninguna (categoría principal) --</option>';
+  padres.forEach(p => { select.innerHTML += `<option value="${p.id}">${p.nombre}</option>`; });
+  if(id){
+    const cat = datos.categorias.find(c => c.id === id);
+    document.getElementById('tituloFormCat').textContent = 'Editar Categoría';
+    document.getElementById('catNombre').value = cat.nombre;
+    select.value = cat.padre || '';
+  } else {
+    document.getElementById('tituloFormCat').textContent = padrePresel ? 'Nueva Subcategoría' : 'Nueva Categoría';
+    document.getElementById('catNombre').value = '';
+    select.value = padrePresel || '';
+  }
+  document.getElementById('modalFormCat').classList.add('active');
+}
+function cerrarFormCat(){
+  document.getElementById('modalFormCat').classList.remove('active');
+  editandoCatId = null;
+}
+function guardarCategoria(){
+  const nombre = document.getElementById('catNombre').value.trim();
+  const padre  = document.getElementById('catPadre').value || null;
+  if(!nombre){ alert('Ingresa un nombre'); return; }
+  if(editandoCatId){
+    const cat = datos.categorias.find(c => c.id === editandoCatId);
+    cat.nombre = nombre; cat.padre = padre;
+  } else {
+    datos.categorias.push({ id: 'c' + Date.now(), nombre, tipo: tipoCatActual, padre });
+  }
+  guardarDatos(); cerrarFormCat(); renderCategorias();
+}
+function eliminarCategoria(id){
+  const cat   = datos.categorias.find(c => c.id === id);
+  const enUso = datos.movimientos.some(m => m.categoria === id || m.subcategoria === id);
+  const hijos = datos.categorias.filter(c => c.padre === id);
+  if(enUso){
+    alert(`No se puede eliminar "${cat.nombre}": está siendo usada en movimientos registrados.`);
+    return;
+  }
+  if(hijos.length > 0){
+    if(!confirm(`"${cat.nombre}" tiene ${hijos.length} subcategoría(s). ¿Eliminar todo?`)) return;
+    datos.categorias = datos.categorias.filter(c => c.id !== id && c.padre !== id);
+  } else {
+    if(!confirm(`¿Eliminar la categoría "${cat.nombre}"?`)) return;
+    datos.categorias = datos.categorias.filter(c => c.id !== id);
+  }
+  guardarDatos(); renderCategorias();
 }
 
 // ==================== FOTO ====================
 function previewFoto(){
-  const input   = document.getElementById('fotoRecibo');
-  const preview = document.getElementById('previewFoto');
-
+  const input = document.getElementById('fotoRecibo');
   if(input.files && input.files[0]){
     const reader = new FileReader();
     reader.onload = function(e){
-      fotoBase64    = e.target.result;
-      preview.src   = fotoBase64;
-      preview.style.display = 'block';
+      fotoBase64 = e.target.result;
+      const preview = document.getElementById('previewFoto');
+      preview.src = fotoBase64; preview.style.display = 'block';
     };
     reader.readAsDataURL(input.files[0]);
   }
@@ -799,36 +889,27 @@ function guardarMovimiento(){
   const fecha        = document.getElementById('fecha').value;
   const origen       = document.getElementById('origen').value;
   const destino      = document.getElementById('destino').value;
-
   if(!monto || monto <= 0){ alert('Ingresa un monto válido'); return; }
   if(tipoActual !== 'transferencia' && !categoria){ alert('Selecciona una categoría'); return; }
   if(!fecha){ alert('Selecciona fecha'); return; }
-  if(tipoActual === 'ingreso'  && !destino){ alert('Selecciona cuenta destino'); return; }
-  if(tipoActual === 'gasto'    && !origen) { alert('Selecciona cuenta origen');  return; }
+  if(tipoActual === 'ingreso'      && !destino){ alert('Selecciona cuenta destino'); return; }
+  if(tipoActual === 'gasto'        && !origen) { alert('Selecciona cuenta origen');  return; }
   if(tipoActual === 'transferencia' && (!origen || !destino)){ alert('Selecciona origen y destino'); return; }
   if(tipoActual === 'transferencia' && origen === destino){ alert('Origen y destino deben ser diferentes'); return; }
-
-  // Si editamos, revertir el efecto financiero del movimiento original
   if(editandoId){
     const orig = datos.movimientos.find(m => m.id === editandoId);
     if(orig){
-      if(orig.tipo === 'ingreso'){
-        const c = datos.cuentas.find(c => c.id === orig.destino);
-        if(c) c.saldo -= orig.monto;
-      } else if(orig.tipo === 'gasto'){
-        const c = datos.cuentas.find(c => c.id === orig.origen);
-        if(c) c.saldo += orig.monto;
-      } else if(orig.tipo === 'transferencia'){
+      if(orig.tipo === 'ingreso'){ const c = datos.cuentas.find(c => c.id === orig.destino); if(c) c.saldo -= orig.monto; }
+      else if(orig.tipo === 'gasto'){ const c = datos.cuentas.find(c => c.id === orig.origen); if(c) c.saldo += orig.monto; }
+      else if(orig.tipo === 'transferencia'){
         const co = datos.cuentas.find(c => c.id === orig.origen);
         const cd = datos.cuentas.find(c => c.id === orig.destino);
-        if(co) co.saldo += orig.monto;
-        if(cd) cd.saldo -= orig.monto;
+        if(co) co.saldo += orig.monto; if(cd) cd.saldo -= orig.monto;
       }
       datos.movimientos = datos.movimientos.filter(m => m.id !== editandoId);
     }
     editandoId = null;
   }
-
   if(tipoActual === 'gasto' || tipoActual === 'transferencia'){
     const ctaOrigen = datos.cuentas.find(c => c.id === origen);
     if(ctaOrigen && ctaOrigen.saldo < monto){
@@ -838,48 +919,29 @@ function guardarMovimiento(){
       return;
     }
   }
-
   const movimiento = {
-    id:           Date.now().toString(),
-    tipo:         tipoActual,
-    monto,
+    id: Date.now().toString(), tipo: tipoActual, monto,
     categoria:    tipoActual === 'transferencia' ? null : (categoria || null),
     subcategoria: tipoActual === 'transferencia' ? null : (subcategoria || null),
-    concepto,
-    fecha,
-    origen:  origen  || null,
-    destino: destino || null,
-    foto:    fotoBase64,
-    creado:  new Date().toISOString()
+    concepto, fecha,
+    origen: origen || null, destino: destino || null,
+    foto: fotoBase64, creado: new Date().toISOString()
   };
-
-  if(tipoActual === 'ingreso'){
-    datos.cuentas.find(c => c.id === destino).saldo += monto;
-  } else if(tipoActual === 'gasto'){
-    datos.cuentas.find(c => c.id === origen).saldo -= monto;
-  } else if(tipoActual === 'transferencia'){
+  if(tipoActual === 'ingreso'){ datos.cuentas.find(c => c.id === destino).saldo += monto; }
+  else if(tipoActual === 'gasto'){ datos.cuentas.find(c => c.id === origen).saldo -= monto; }
+  else if(tipoActual === 'transferencia'){
     datos.cuentas.find(c => c.id === origen).saldo  -= monto;
     datos.cuentas.find(c => c.id === destino).saldo += monto;
   }
-
   datos.movimientos.push(movimiento);
-  guardarDatos();
-  cerrarModal();
-  renderCuentas();
-  renderMovimientos();
-  renderReportes();
+  guardarDatos(); cerrarModal(); renderCuentas(); renderMovimientos(); renderReportes();
 }
 
 // ==================== EDITAR MOVIMIENTO ====================
 function editarMovimiento(id){
-  const m = datos.movimientos.find(x => x.id === id);
-  if(!m) return;
-
-  editandoId  = id;
-  tipoActual  = m.tipo;
-
+  const m = datos.movimientos.find(x => x.id === id); if(!m) return;
+  editandoId = id; tipoActual = m.tipo;
   abrirModal();
-
   setTimeout(() => {
     setTipo(m.tipo);
     document.getElementById('monto').value    = m.monto;
@@ -895,56 +957,40 @@ function editarMovimiento(id){
     if(m.foto){
       fotoBase64 = m.foto;
       const preview = document.getElementById('previewFoto');
-      preview.src   = m.foto;
-      preview.style.display = 'block';
+      preview.src = m.foto; preview.style.display = 'block';
     }
   }, 50);
 }
 
 // ==================== MOVIMIENTOS ====================
-// FIX: recibe el elemento botón para no depender del event global
 function filtrarMovimientos(filtro, el){
   filtroActual = filtro;
   document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   renderMovimientos();
 }
-
 function renderMovimientos(){
   const contenedor = document.getElementById('listaMovimientos');
   let movs = [...datos.movimientos].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
-
   if(filtroActual === 'ingreso') movs = movs.filter(m => m.tipo === 'ingreso');
   if(filtroActual === 'gasto')   movs = movs.filter(m => m.tipo === 'gasto');
   if(filtroActual === 'hoy'){
     const hoy = new Date().toDateString();
     movs = movs.filter(m => new Date(m.fecha).toDateString() === hoy);
   }
-
-  if(movs.length === 0){
-    contenedor.innerHTML = '<div class="empty-state">Sin movimientos</div>';
-    return;
-  }
-
+  if(movs.length === 0){ contenedor.innerHTML = '<div class="empty-state">Sin movimientos</div>'; return; }
   contenedor.innerHTML = movs.map(m => {
     const cat        = m.categoria    ? datos.categorias.find(c => c.id === m.categoria)    : null;
     const sub        = m.subcategoria ? datos.categorias.find(c => c.id === m.subcategoria) : null;
     const ctaOrigen  = m.origen  ? datos.cuentas.find(c => c.id === m.origen)  : null;
     const ctaDestino = m.destino ? datos.cuentas.find(c => c.id === m.destino) : null;
-
     let detalleCuenta = '';
-    if(m.tipo === 'ingreso')       detalleCuenta = `→ ${ctaDestino?.nombre || ''}`;
-    else if(m.tipo === 'gasto')    detalleCuenta = `← ${ctaOrigen?.nombre  || ''}`;
-    else                           detalleCuenta = `${ctaOrigen?.nombre || ''} → ${ctaDestino?.nombre || ''}`;
-
-    // FIX: signo correcto por tipo; transferencias muestran ⇄
+    if(m.tipo === 'ingreso')    detalleCuenta = `→ ${ctaDestino?.nombre || ''}`;
+    else if(m.tipo === 'gasto') detalleCuenta = `← ${ctaOrigen?.nombre  || ''}`;
+    else                        detalleCuenta = `${ctaOrigen?.nombre || ''} → ${ctaDestino?.nombre || ''}`;
     const signo    = m.tipo === 'ingreso' ? '+' : m.tipo === 'gasto' ? '-' : '⇄';
     const etiqueta = cat ? `${cat.nombre}${sub ? ' › ' + sub.nombre : ''}` : 'Transferencia';
-
-    const fecha = new Date(m.fecha).toLocaleString('es-MX', {
-      day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'
-    });
-
+    const fecha    = new Date(m.fecha).toLocaleString('es-MX', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
     return `
       <div class="movimiento-item">
         <div class="movimiento-acciones">
@@ -959,41 +1005,25 @@ function renderMovimientos(){
         <div class="movimiento-detalle">${detalleCuenta}</div>
         ${m.foto ? `<img src="${m.foto}" class="foto-recibo" onclick="toggleZoom(this)">` : ''}
         <div class="movimiento-fecha">${fecha}</div>
-      </div>
-    `;
+      </div>`;
   }).join('');
 }
-
 function toggleZoom(img){
   img.style.transform = img.style.transform === 'scale(2)' ? 'scale(1)' : 'scale(2)';
 }
-
 function eliminarMovimiento(id){
   if(!confirm('¿Eliminar este movimiento?')) return;
-
-  const idx = datos.movimientos.findIndex(m => m.id === id);
-  if(idx === -1) return;
-
-  const m = datos.movimientos[idx];
-
-  if(m.tipo === 'ingreso'){
-    const c = datos.cuentas.find(c => c.id === m.destino);
-    if(c) c.saldo -= m.monto;
-  } else if(m.tipo === 'gasto'){
-    const c = datos.cuentas.find(c => c.id === m.origen);
-    if(c) c.saldo += m.monto;
-  } else if(m.tipo === 'transferencia'){
+  const idx = datos.movimientos.findIndex(m => m.id === id); if(idx === -1) return;
+  const m   = datos.movimientos[idx];
+  if(m.tipo === 'ingreso'){ const c = datos.cuentas.find(c => c.id === m.destino); if(c) c.saldo -= m.monto; }
+  else if(m.tipo === 'gasto'){ const c = datos.cuentas.find(c => c.id === m.origen); if(c) c.saldo += m.monto; }
+  else if(m.tipo === 'transferencia'){
     const co = datos.cuentas.find(c => c.id === m.origen);
     const cd = datos.cuentas.find(c => c.id === m.destino);
-    if(co) co.saldo += m.monto;
-    if(cd) cd.saldo -= m.monto;
+    if(co) co.saldo += m.monto; if(cd) cd.saldo -= m.monto;
   }
-
   datos.movimientos.splice(idx, 1);
-  guardarDatos();
-  renderCuentas();
-  renderMovimientos();
-  renderReportes();
+  guardarDatos(); renderCuentas(); renderMovimientos(); renderReportes();
 }
 
 // ==================== REPORTES ====================
@@ -1001,23 +1031,19 @@ function renderReportes(){
   const ahora     = new Date();
   const mesActual = ahora.getMonth();
   const añoActual = ahora.getFullYear();
-
-  const movsMes = datos.movimientos.filter(m => {
+  const movsMes   = datos.movimientos.filter(m => {
     const f = new Date(m.fecha);
     return f.getMonth() === mesActual && f.getFullYear() === añoActual;
   });
-
   const ingresos = movsMes.filter(m => m.tipo === 'ingreso').reduce((a,m) => a + m.monto, 0);
   const gastos   = movsMes.filter(m => m.tipo === 'gasto').reduce((a,m)   => a + m.monto, 0);
   const balance  = ingresos - gastos;
-
   const gastosPorCat = {};
   movsMes.filter(m => m.tipo === 'gasto').forEach(m => {
     const cat    = m.categoria ? datos.categorias.find(c => c.id === m.categoria) : null;
     const nombre = cat ? cat.nombre : 'Sin categoría';
     gastosPorCat[nombre] = (gastosPorCat[nombre] || 0) + m.monto;
   });
-
   let html = `
     <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
       <div style="text-align:center;">
@@ -1034,11 +1060,8 @@ function renderReportes(){
       </div>
     </div>
     <div style="border-top:1px solid var(--border);padding-top:15px;">
-      <div style="font-size:12px;color:#888;margin-bottom:10px;">GASTOS POR CATEGORÍA</div>
-  `;
-
+      <div style="font-size:12px;color:#888;margin-bottom:10px;">GASTOS POR CATEGORÍA</div>`;
   const sortedCats = Object.entries(gastosPorCat).sort((a,b) => b[1] - a[1]);
-
   if(sortedCats.length === 0){
     html += '<div style="opacity:0.5;text-align:center;padding:20px;">Sin gastos este mes</div>';
   } else {
@@ -1051,28 +1074,21 @@ function renderReportes(){
             <div style="font-weight:bold;">$${monto.toFixed(2)}</div>
             <div style="font-size:11px;color:#666;">${porcentaje}%</div>
           </div>
-        </div>
-      `;
+        </div>`;
     });
   }
-
   html += '</div>';
   document.getElementById('reporteMensual').innerHTML = html;
 }
 
 // ==================== INIT ====================
 cargarDatos();
-renderCuentas();
-renderMovimientos();
-renderReportes();
+renderCuentas(); renderMovimientos(); renderReportes();
 
-document.getElementById('modalMovimiento').addEventListener('click', function(e){
-  if(e.target === this) cerrarModal();
-});
-document.getElementById('modalCuenta').addEventListener('click', function(e){
-  if(e.target === this) cerrarModalCuenta();
-});
+document.getElementById('modalMovimiento').addEventListener('click', function(e){ if(e.target===this) cerrarModal(); });
+document.getElementById('modalCuenta').addEventListener('click',     function(e){ if(e.target===this) cerrarModalCuenta(); });
+document.getElementById('modalCategorias').addEventListener('click', function(e){ if(e.target===this) cerrarModalCategorias(); });
+document.getElementById('modalFormCat').addEventListener('click',    function(e){ if(e.target===this) cerrarFormCat(); });
 </script>
-
 </body>
 </html>
