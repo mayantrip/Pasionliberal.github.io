@@ -282,8 +282,6 @@ input:focus,select:focus{outline:none;border-color:var(--gold);}
   font-size:13px;margin-bottom:15px;display:none;
 }
 .saldo-insuficiente.active{display:block;}
-
-/* ===== CATEGORÍAS ===== */
 .cat-tabs{display:flex;gap:8px;margin-bottom:16px;}
 .cat-tab{
   flex:1;padding:12px;background:#1a1a1a;
@@ -367,7 +365,6 @@ input:focus,select:focus{outline:none;border-color:var(--gold);}
 
 <button class="btn-fab" onclick="abrirModal()">+</button>
 
-<!-- ===== MODAL MOVIMIENTO ===== -->
 <div id="modalMovimiento" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -417,7 +414,6 @@ input:focus,select:focus{outline:none;border-color:var(--gold);}
   </div>
 </div>
 
-<!-- ===== MODAL CUENTA ===== -->
 <div id="modalCuenta" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -436,7 +432,6 @@ input:focus,select:focus{outline:none;border-color:var(--gold);}
   </div>
 </div>
 
-<!-- ===== MODAL CATEGORÍAS ===== -->
 <div id="modalCategorias" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -445,14 +440,13 @@ input:focus,select:focus{outline:none;border-color:var(--gold);}
     </div>
     <div class="cat-tabs">
       <button class="cat-tab active ingreso" id="catTabIngreso" onclick="cambiarTipoCat('ingreso', this)">📈 Ingresos</button>
-      <button class="cat-tab gasto"          id="catTabGasto"   onclick="cambiarTipoCat('gasto',   this)">📉 Gastos</button>
+      <button class="cat-tab gasto" id="catTabGasto" onclick="cambiarTipoCat('gasto', this)">📉 Gastos</button>
     </div>
     <div id="listaCategorias"></div>
     <button class="btn-nueva-cuenta" onclick="abrirFormCat(null, null)" style="margin-top:5px;">+ Nueva Categoría</button>
   </div>
 </div>
 
-<!-- ===== MODAL FORM CATEGORÍA (sub-modal, z-index 3000) ===== -->
 <div id="modalFormCat" class="modal-sub">
   <div class="modal-content">
     <div class="modal-header">
@@ -472,76 +466,132 @@ input:focus,select:focus{outline:none;border-color:var(--gold);}
 </div>
 
 <script>
-// ==================== DATOS ====================
 const CATEGORIAS_DEFAULT = [
-  // ── INGRESOS ──────────────────────────────────────────────────
-  {id:'i1', nombre:'Ventas y Servicios',      tipo:'ingreso', padre:null},
-  {id:'i2', nombre:'Tours y Excursiones',     tipo:'ingreso', padre:'i1'},
-  {id:'i3', nombre:'Privados',                tipo:'ingreso', padre:'i1'},
-  {id:'i4', nombre:'Traslados',               tipo:'ingreso', padre:'i1'},
-  {id:'i5', nombre:'Renta de Equipo',         tipo:'ingreso', padre:'i1'},
-  {id:'i6', nombre:'Paquetes Turísticos',     tipo:'ingreso', padre:'i1'},
-  {id:'i7', nombre:'Snorkel / Buceo',         tipo:'ingreso', padre:'i1'},
-  {id:'i8', nombre:'Cenotes',                 tipo:'ingreso', padre:'i1'},
-  {id:'i9',  nombre:'Comisiones',             tipo:'ingreso', padre:null},
-  {id:'i10', nombre:'Agencias de Viaje',      tipo:'ingreso', padre:'i9'},
-  {id:'i11', nombre:'Hoteles',                tipo:'ingreso', padre:'i9'},
-  {id:'i12', nombre:'Plataformas Online',     tipo:'ingreso', padre:'i9'},
-  {id:'i13', nombre:'Recomendaciones',        tipo:'ingreso', padre:'i9'},
-  {id:'i14', nombre:'Propinas',               tipo:'ingreso', padre:null},
-  {id:'i15', nombre:'En Efectivo',            tipo:'ingreso', padre:'i14'},
-  {id:'i16', nombre:'Digital / Transferencia',tipo:'ingreso', padre:'i14'},
-  {id:'i17', nombre:'Ventas Directas',        tipo:'ingreso', padre:null},
-  {id:'i18', nombre:'Souvenirs',              tipo:'ingreso', padre:'i17'},
-  {id:'i19', nombre:'Fotografías',            tipo:'ingreso', padre:'i17'},
-  {id:'i20', nombre:'Alimentos y Bebidas',    tipo:'ingreso', padre:'i17'},
-  {id:'i21', nombre:'Financieros',            tipo:'ingreso', padre:null},
-  {id:'i22', nombre:'Intereses Bancarios',    tipo:'ingreso', padre:'i21'},
-  {id:'i23', nombre:'Rendimientos',           tipo:'ingreso', padre:'i21'},
-  {id:'i24', nombre:'Devolución de IVA',      tipo:'ingreso', padre:'i21'},
-  {id:'i25', nombre:'Otros Ingresos',         tipo:'ingreso', padre:null},
-  {id:'i26', nombre:'Reembolsos',             tipo:'ingreso', padre:'i25'},
-  {id:'i27', nombre:'Subsidios / Apoyos',     tipo:'ingreso', padre:'i25'},
-  {id:'i28', nombre:'Donaciones',             tipo:'ingreso', padre:'i25'},
-  {id:'i29', nombre:'Prestamos Recibidos',    tipo:'ingreso', padre:'i25'},
-  // ── GASTOS ────────────────────────────────────────────────────
-  {id:'g1', nombre:'Operación',              tipo:'gasto', padre:null},
-  {id:'g2', nombre:'Gasolina',              tipo:'gasto', padre:'g1'},
-  {id:'g3', nombre:'Mantenimiento',         tipo:'gasto', padre:'g1'},
-  {id:'g4', nombre:'Refacciones',           tipo:'gasto', padre:'g1'},
-  {id:'g5', nombre:'Lavado',               tipo:'gasto', padre:'g1'},
-  {id:'g6', nombre:'Peajes',               tipo:'gasto', padre:'g1'},
-  {id:'g7', nombre:'Estacionamiento',       tipo:'gasto', padre:'g1'},
-  {id:'g22', nombre:'Nómina',              tipo:'gasto', padre:null},
-  {id:'g23', nombre:'Sueldos',             tipo:'gasto', padre:'g22'},
-  {id:'g24', nombre:'Prestaciones',        tipo:'gasto', padre:'g22'},
-  {id:'g25', nombre:'Aguinaldo',           tipo:'gasto', padre:'g22'},
+  // ── INGRESOS ───────────────────────────────────────
+  // Ventas y Servicios
+  {id:'i1', nombre:'Ventas y Servicios',       tipo:'ingreso', padre:null},
+  {id:'i2', nombre:'Tours y Excursiones',      tipo:'ingreso', padre:'i1'},
+  {id:'i3', nombre:'Privados',                 tipo:'ingreso', padre:'i1'},
+  {id:'i4', nombre:'Traslados',                tipo:'ingreso', padre:'i1'},
+  {id:'i5', nombre:'Renta de Equipo',          tipo:'ingreso', padre:'i1'},
+  {id:'i6', nombre:'Paquetes Turísticos',      tipo:'ingreso', padre:'i1'},
+  {id:'i7', nombre:'Snorkel / Buceo',          tipo:'ingreso', padre:'i1'},
+  {id:'i8', nombre:'Cenotes',                  tipo:'ingreso', padre:'i1'},
+  // Comisiones
+  {id:'i9',  nombre:'Comisiones',              tipo:'ingreso', padre:null},
+  {id:'i10', nombre:'Agencias de Viaje',       tipo:'ingreso', padre:'i9'},
+  {id:'i11', nombre:'Hoteles',                 tipo:'ingreso', padre:'i9'},
+  {id:'i12', nombre:'Plataformas Online',      tipo:'ingreso', padre:'i9'},
+  {id:'i13', nombre:'Recomendaciones',         tipo:'ingreso', padre:'i9'},
+  // Propinas
+  {id:'i14', nombre:'Propinas',                tipo:'ingreso', padre:null},
+  {id:'i15', nombre:'En Efectivo',             tipo:'ingreso', padre:'i14'},
+  {id:'i16', nombre:'Digital / Transferencia', tipo:'ingreso', padre:'i14'},
+  // Ventas Directas
+  {id:'i17', nombre:'Ventas Directas',         tipo:'ingreso', padre:null},
+  {id:'i18', nombre:'Souvenirs',               tipo:'ingreso', padre:'i17'},
+  {id:'i19', nombre:'Fotografías',             tipo:'ingreso', padre:'i17'},
+  {id:'i20', nombre:'Alimentos y Bebidas',     tipo:'ingreso', padre:'i17'},
+  // Financieros
+  {id:'i21', nombre:'Financieros',             tipo:'ingreso', padre:null},
+  {id:'i22', nombre:'Intereses Bancarios',     tipo:'ingreso', padre:'i21'},
+  {id:'i23', nombre:'Rendimientos',            tipo:'ingreso', padre:'i21'},
+  {id:'i24', nombre:'Devolución de IVA',       tipo:'ingreso', padre:'i21'},
+  // Otros Ingresos
+  {id:'i25', nombre:'Otros Ingresos',          tipo:'ingreso', padre:null},
+  {id:'i26', nombre:'Reembolsos',              tipo:'ingreso', padre:'i25'},
+  {id:'i27', nombre:'Subsidios / Apoyos',      tipo:'ingreso', padre:'i25'},
+  {id:'i28', nombre:'Donaciones',              tipo:'ingreso', padre:'i25'},
+  {id:'i29', nombre:'Prestamos Recibidos',     tipo:'ingreso', padre:'i25'},
+  // Salario y Nómina
+  {id:'i30', nombre:'Salario y Nómina',         tipo:'ingreso', padre:null},
+  {id:'i31', nombre:'Sueldo Base',               tipo:'ingreso', padre:'i30'},
+  {id:'i32', nombre:'Horas Extra',               tipo:'ingreso', padre:'i30'},
+  {id:'i33', nombre:'Bono / Gratificación',      tipo:'ingreso', padre:'i30'},
+  {id:'i34', nombre:'Aguinaldo',                 tipo:'ingreso', padre:'i30'},
+  {id:'i35', nombre:'Reparto de Utilidades',     tipo:'ingreso', padre:'i30'},
+  // Freelance / Independiente
+  {id:'i36', nombre:'Freelance / Independiente', tipo:'ingreso', padre:null},
+  {id:'i37', nombre:'Proyectos',                 tipo:'ingreso', padre:'i36'},
+  {id:'i38', nombre:'Consultoría',               tipo:'ingreso', padre:'i36'},
+  {id:'i39', nombre:'Servicios Digitales',       tipo:'ingreso', padre:'i36'},
+  // Inversiones Personales
+  {id:'i40', nombre:'Inversiones Personales',    tipo:'ingreso', padre:null},
+  {id:'i41', nombre:'Dividendos',                tipo:'ingreso', padre:'i40'},
+  {id:'i42', nombre:'Renta de Propiedades',      tipo:'ingreso', padre:'i40'},
+  {id:'i43', nombre:'Bolsa / Fondos',            tipo:'ingreso', padre:'i40'},
+  {id:'i44', nombre:'Criptomonedas',             tipo:'ingreso', padre:'i40'},
+  // Apoyos y Familia
+  {id:'i45', nombre:'Apoyos y Familia',          tipo:'ingreso', padre:null},
+  {id:'i46', nombre:'Becas',                     tipo:'ingreso', padre:'i45'},
+  {id:'i47', nombre:'Apoyos Gobierno',           tipo:'ingreso', padre:'i45'},
+  {id:'i48', nombre:'Pensión Alimenticia',        tipo:'ingreso', padre:'i45'},
+  {id:'i49', nombre:'Regalos / Herencias',        tipo:'ingreso', padre:'i45'},
+
+  // ── GASTOS ─────────────────────────────────────────
+  // Operación
+  {id:'g1', nombre:'Operación',               tipo:'gasto', padre:null},
+  {id:'g2', nombre:'Gasolina',               tipo:'gasto', padre:'g1'},
+  {id:'g3', nombre:'Mantenimiento',          tipo:'gasto', padre:'g1'},
+  {id:'g4', nombre:'Refacciones',            tipo:'gasto', padre:'g1'},
+  {id:'g5', nombre:'Lavado',                tipo:'gasto', padre:'g1'},
+  {id:'g6', nombre:'Peajes',                tipo:'gasto', padre:'g1'},
+  {id:'g7', nombre:'Estacionamiento',        tipo:'gasto', padre:'g1'},
+  // Nómina
+  {id:'g22', nombre:'Nómina',               tipo:'gasto', padre:null},
+  {id:'g23', nombre:'Sueldos',              tipo:'gasto', padre:'g22'},
+  {id:'g24', nombre:'Prestaciones',         tipo:'gasto', padre:'g22'},
+  {id:'g25', nombre:'Aguinaldo',            tipo:'gasto', padre:'g22'},
   {id:'g26', nombre:'IMSS / Seguridad Social', tipo:'gasto', padre:'g22'},
-  {id:'g8',  nombre:'Administración',       tipo:'gasto', padre:null},
-  {id:'g9',  nombre:'Permisos',            tipo:'gasto', padre:'g8'},
-  {id:'g10', nombre:'Seguro',              tipo:'gasto', padre:'g8'},
-  {id:'g11', nombre:'Multas',              tipo:'gasto', padre:'g8'},
-  {id:'g12', nombre:'Contador',            tipo:'gasto', padre:'g8'},
-  {id:'g27', nombre:'Papelería y Oficina', tipo:'gasto', padre:'g8'},
-  {id:'g28', nombre:'Marketing',           tipo:'gasto', padre:null},
-  {id:'g29', nombre:'Redes Sociales',      tipo:'gasto', padre:'g28'},
-  {id:'g30', nombre:'Publicidad',          tipo:'gasto', padre:'g28'},
-  {id:'g31', nombre:'Diseño',             tipo:'gasto', padre:'g28'},
-  {id:'g32', nombre:'Servicios',           tipo:'gasto', padre:null},
-  {id:'g33', nombre:'Internet',            tipo:'gasto', padre:'g32'},
-  {id:'g34', nombre:'Telefonía',           tipo:'gasto', padre:'g32'},
-  {id:'g35', nombre:'Electricidad',        tipo:'gasto', padre:'g32'},
-  {id:'g36', nombre:'Agua',               tipo:'gasto', padre:'g32'},
-  {id:'g37', nombre:'Renta de Local',      tipo:'gasto', padre:'g32'},
-  {id:'g13', nombre:'Personal',            tipo:'gasto', padre:null},
-  {id:'g14', nombre:'Comida',             tipo:'gasto', padre:'g13'},
-  {id:'g15', nombre:'Ocio',              tipo:'gasto', padre:'g13'},
-  {id:'g16', nombre:'Ropa',              tipo:'gasto', padre:'g13'},
-  {id:'g17', nombre:'Salud',             tipo:'gasto', padre:'g13'},
-  {id:'g18', nombre:'Finanzas',            tipo:'gasto', padre:null},
-  {id:'g19', nombre:'Deudas',             tipo:'gasto', padre:'g18'},
-  {id:'g20', nombre:'Intereses',           tipo:'gasto', padre:'g18'},
-  {id:'g21', nombre:'Comisiones Bancarias',tipo:'gasto', padre:'g18'}
+  // Administración
+  {id:'g8',  nombre:'Administración',        tipo:'gasto', padre:null},
+  {id:'g9',  nombre:'Permisos',             tipo:'gasto', padre:'g8'},
+  {id:'g10', nombre:'Seguro',               tipo:'gasto', padre:'g8'},
+  {id:'g11', nombre:'Multas',               tipo:'gasto', padre:'g8'},
+  {id:'g12', nombre:'Contador',             tipo:'gasto', padre:'g8'},
+  {id:'g27', nombre:'Papelería y Oficina',  tipo:'gasto', padre:'g8'},
+  // Marketing
+  {id:'g28', nombre:'Marketing',            tipo:'gasto', padre:null},
+  {id:'g29', nombre:'Redes Sociales',       tipo:'gasto', padre:'g28'},
+  {id:'g30', nombre:'Publicidad',           tipo:'gasto', padre:'g28'},
+  {id:'g31', nombre:'Diseño',              tipo:'gasto', padre:'g28'},
+  // Servicios
+  {id:'g32', nombre:'Servicios',            tipo:'gasto', padre:null},
+  {id:'g33', nombre:'Internet',             tipo:'gasto', padre:'g32'},
+  {id:'g34', nombre:'Telefonía',            tipo:'gasto', padre:'g32'},
+  {id:'g35', nombre:'Electricidad',         tipo:'gasto', padre:'g32'},
+  {id:'g36', nombre:'Agua',                tipo:'gasto', padre:'g32'},
+  {id:'g37', nombre:'Renta de Local',       tipo:'gasto', padre:'g32'},
+  // Hogar / Casa
+  {id:'g38', nombre:'Hogar / Casa',               tipo:'gasto', padre:null},
+  {id:'g39', nombre:'Renta / Hipoteca',           tipo:'gasto', padre:'g38'},
+  {id:'g40', nombre:'Gas',                        tipo:'gasto', padre:'g38'},
+  {id:'g41', nombre:'Mantenimiento del Hogar',    tipo:'gasto', padre:'g38'},
+  {id:'g42', nombre:'Muebles y Decoración',       tipo:'gasto', padre:'g38'},
+  // Personal
+  {id:'g13', nombre:'Personal',                   tipo:'gasto', padre:null},
+  {id:'g14', nombre:'Comida y Despensa',           tipo:'gasto', padre:'g13'},
+  {id:'g15', nombre:'Restaurantes / Antojitos',   tipo:'gasto', padre:'g13'},
+  {id:'g16', nombre:'Ropa y Calzado',             tipo:'gasto', padre:'g13'},
+  {id:'g17', nombre:'Salud y Medicamentos',        tipo:'gasto', padre:'g13'},
+  {id:'g43', nombre:'Educación / Cursos',         tipo:'gasto', padre:'g13'},
+  {id:'g44', nombre:'Gym / Deporte',              tipo:'gasto', padre:'g13'},
+  {id:'g45', nombre:'Entretenimiento',            tipo:'gasto', padre:'g13'},
+  {id:'g46', nombre:'Transporte Personal',        tipo:'gasto', padre:'g13'},
+  {id:'g47', nombre:'Viajes y Vacaciones',        tipo:'gasto', padre:'g13'},
+  {id:'g48', nombre:'Mascotas',                   tipo:'gasto', padre:'g13'},
+  {id:'g49', nombre:'Estética / Cuidado Personal', tipo:'gasto', padre:'g13'},
+  // Finanzas Personales
+  {id:'g18', nombre:'Finanzas Personales',        tipo:'gasto', padre:null},
+  {id:'g19', nombre:'Deudas',                     tipo:'gasto', padre:'g18'},
+  {id:'g20', nombre:'Intereses',                  tipo:'gasto', padre:'g18'},
+  {id:'g21', nombre:'Comisiones Bancarias',       tipo:'gasto', padre:'g18'},
+  {id:'g50', nombre:'Ahorro',                     tipo:'gasto', padre:'g18'},
+  {id:'g51', nombre:'Inversiones',               tipo:'gasto', padre:'g18'},
+  {id:'g52', nombre:'Tarjeta de Crédito',         tipo:'gasto', padre:'g18'},
+  {id:'g53', nombre:'Préstamos Personales',        tipo:'gasto', padre:'g18'},
+  {id:'g54', nombre:'Seguros Personales',         tipo:'gasto', padre:'g18'},
+  {id:'g55', nombre:'Fondo de Emergencia',        tipo:'gasto', padre:'g18'}
 ];
 
 let datos = {
@@ -557,538 +607,301 @@ let datos = {
   categorias: CATEGORIAS_DEFAULT
 };
 
-let tipoActual      = 'ingreso';
-let filtroActual    = 'todos';
-let fotoBase64      = null;
-let editandoId      = null;
-let editandoCuentaId= null;
-let tipoCatActual   = 'ingreso';
-let editandoCatId   = null;
+let tipoActual='ingreso', filtroActual='todos', fotoBase64=null;
+let editandoId=null, editandoCuentaId=null, tipoCatActual='ingreso', editandoCatId=null;
 
-// ==================== LOCALSTORAGE ====================
-function guardarDatos(){
-  localStorage.setItem('finanzasMayanTrip', JSON.stringify(datos));
-}
+function guardarDatos(){ localStorage.setItem('finanzasMayanTrip', JSON.stringify(datos)); }
 function cargarDatos(){
-  const guardado = localStorage.getItem('finanzasMayanTrip');
-  if(guardado){
-    const parsed = JSON.parse(guardado);
-    if(!parsed.categorias || parsed.categorias.length === 0) parsed.categorias = CATEGORIAS_DEFAULT;
-    datos = parsed;
-  }
+  const g = localStorage.getItem('finanzasMayanTrip');
+  if(g){ const p=JSON.parse(g); if(!p.categorias||!p.categorias.length) p.categorias=CATEGORIAS_DEFAULT; datos=p; }
 }
 
-// ==================== EXPORTAR / IMPORTAR ====================
 function exportarDatos(){
-  const blob = new Blob([JSON.stringify(datos, null, 2)], {type:'application/json'});
-  const a    = document.createElement('a');
-  a.href     = URL.createObjectURL(blob);
-  a.download = 'mayan-trip-' + new Date().toISOString().slice(0,10) + '.json';
-  document.body.appendChild(a); a.click();
-  document.body.removeChild(a); URL.revokeObjectURL(a.href);
+  const b=new Blob([JSON.stringify(datos,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b);
+  a.download='mayan-trip-'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
 }
 function importarDatos(e){
-  const file = e.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    try {
-      const imp = JSON.parse(ev.target.result);
-      if(!imp.cuentas || !imp.movimientos) throw new Error();
-      if(!imp.categorias || imp.categorias.length === 0) imp.categorias = CATEGORIAS_DEFAULT;
-      datos = imp;
-      guardarDatos();
-      renderCuentas(); renderMovimientos(); renderReportes();
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=function(ev){
+    try{
+      const imp=JSON.parse(ev.target.result);
+      if(!imp.cuentas||!imp.movimientos) throw new Error();
+      if(!imp.categorias||!imp.categorias.length) imp.categorias=CATEGORIAS_DEFAULT;
+      datos=imp; guardarDatos(); renderCuentas(); renderMovimientos(); renderReportes();
       alert('✅ Datos importados correctamente');
-    } catch { alert('❌ Error al importar: archivo inválido'); }
-    e.target.value = '';
+    }catch{ alert('❌ Error al importar: archivo inválido'); }
+    e.target.value='';
   };
-  reader.readAsText(file);
+  r.readAsText(f);
 }
 
-// ==================== NAVEGACIÓN ====================
-function cambiarTab(tab, el){
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+function cambiarTab(tab,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('section-' + tab).classList.add('active');
-  if(tab === 'cuentas')     renderCuentas();
-  if(tab === 'movimientos') renderMovimientos();
-  if(tab === 'reportes')    renderReportes();
+  document.getElementById('section-'+tab).classList.add('active');
+  if(tab==='cuentas') renderCuentas();
+  if(tab==='movimientos') renderMovimientos();
+  if(tab==='reportes') renderReportes();
 }
 
-// ==================== MODAL MOVIMIENTO ====================
 function abrirModal(){
-  document.getElementById('tituloModalMov').textContent = editandoId ? 'Editar Movimiento' : 'Nuevo Movimiento';
+  document.getElementById('tituloModalMov').textContent=editandoId?'Editar Movimiento':'Nuevo Movimiento';
   document.getElementById('modalMovimiento').classList.add('active');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
   if(!editandoId){
-    const ahora = new Date();
-    ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
-    document.getElementById('fecha').value = ahora.toISOString().slice(0,16);
+    const a=new Date(); a.setMinutes(a.getMinutes()-a.getTimezoneOffset());
+    document.getElementById('fecha').value=a.toISOString().slice(0,16);
   }
-  cargarCuentas();
-  setTipo(tipoActual);
+  cargarCuentas(); setTipo(tipoActual);
 }
 function cerrarModal(){
   document.getElementById('modalMovimiento').classList.remove('active');
-  document.body.style.overflow = '';
-  editandoId = null; tipoActual = 'ingreso';
-  limpiarFormulario();
+  document.body.style.overflow=''; editandoId=null; tipoActual='ingreso'; limpiarFormulario();
 }
 function limpiarFormulario(){
-  document.getElementById('monto').value = '';
-  document.getElementById('concepto').value = '';
-  document.getElementById('fotoRecibo').value = '';
-  document.getElementById('previewFoto').style.display = 'none';
-  fotoBase64 = null;
+  ['monto','concepto','fotoRecibo'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('previewFoto').style.display='none'; fotoBase64=null;
   document.getElementById('alertaSaldo').classList.remove('active');
 }
 
-function setTipo(tipo, el){
-  tipoActual = tipo;
-  document.querySelectorAll('#tipoSelectorMov .tipo-btn').forEach(b => b.classList.remove('active'));
-  const btn = el || document.querySelector('#tipoSelectorMov .tipo-btn.' + tipo);
+function setTipo(tipo,el){
+  tipoActual=tipo;
+  document.querySelectorAll('#tipoSelectorMov .tipo-btn').forEach(b=>b.classList.remove('active'));
+  const btn=el||document.querySelector('#tipoSelectorMov .tipo-btn.'+tipo);
   if(btn) btn.classList.add('active');
-  const grupoOrigen  = document.getElementById('grupoOrigen');
-  const grupoDestino = document.getElementById('grupoDestino');
-  const labelDestino = document.querySelector('#grupoDestino label');
-  if(tipo === 'ingreso'){
-    grupoOrigen.style.display  = 'none';
-    grupoDestino.style.display = 'block';
-    labelDestino.textContent   = 'A qué cuenta';
-  } else if(tipo === 'gasto'){
-    grupoOrigen.style.display  = 'block';
-    grupoDestino.style.display = 'none';
-    document.querySelector('#grupoOrigen label').textContent = 'De qué cuenta';
-  } else {
-    grupoOrigen.style.display  = 'block';
-    grupoDestino.style.display = 'block';
-    document.querySelector('#grupoOrigen label').textContent = 'Desde (Origen)';
-    labelDestino.textContent   = 'Hacia (Destino)';
-  }
+  const go=document.getElementById('grupoOrigen'), gd=document.getElementById('grupoDestino');
+  const ld=document.querySelector('#grupoDestino label');
+  if(tipo==='ingreso'){ go.style.display='none'; gd.style.display='block'; ld.textContent='A qué cuenta'; }
+  else if(tipo==='gasto'){ go.style.display='block'; gd.style.display='none'; document.querySelector('#grupoOrigen label').textContent='De qué cuenta'; }
+  else{ go.style.display='block'; gd.style.display='block'; document.querySelector('#grupoOrigen label').textContent='Desde (Origen)'; ld.textContent='Hacia (Destino)'; }
   cargarCategorias();
 }
 
-// ==================== CUENTAS ====================
 function cargarCuentas(){
-  let html = '<option value="">Selecciona...</option>';
-  datos.cuentas.forEach(c => {
-    html += `<option value="${c.id}">${c.nombre} - $${c.saldo.toFixed(2)}</option>`;
-  });
-  document.getElementById('origen').innerHTML  = html;
-  document.getElementById('destino').innerHTML = html;
+  let h='<option value="">Selecciona...</option>';
+  datos.cuentas.forEach(c=>{ h+=`<option value="${c.id}">${c.nombre} - $${c.saldo.toFixed(2)}</option>`; });
+  document.getElementById('origen').innerHTML=document.getElementById('destino').innerHTML=h;
 }
 function renderCuentas(){
-  const contenedor = document.getElementById('listaCuentas');
-  let total = 0;
-  contenedor.innerHTML = datos.cuentas.map(c => {
-    total += c.saldo;
-    const clase    = c.saldo >= 0 ? 'positive' : 'negative';
-    const tieneMov = datos.movimientos.some(m => m.origen === c.id || m.destino === c.id);
-    return `
-      <div class="cuenta-item">
-        <span class="cuenta-nombre">${c.nombre}</span>
-        <div class="cuenta-acciones">
-          <span class="cuenta-saldo ${clase}">$${c.saldo.toFixed(2)}</span>
-          <button class="btn-icono" onclick="abrirModalCuenta('${c.id}')" title="Editar">✏️</button>
-          ${!tieneMov ? `<button class="btn-icono" onclick="eliminarCuenta('${c.id}')" title="Eliminar">🗑</button>` : ''}
-        </div>
-      </div>`;
+  let total=0;
+  document.getElementById('listaCuentas').innerHTML=datos.cuentas.map(c=>{
+    total+=c.saldo;
+    const cl=c.saldo>=0?'positive':'negative';
+    const ok=!datos.movimientos.some(m=>m.origen===c.id||m.destino===c.id);
+    return `<div class="cuenta-item"><span class="cuenta-nombre">${c.nombre}</span><div class="cuenta-acciones"><span class="cuenta-saldo ${cl}">$${c.saldo.toFixed(2)}</span><button class="btn-icono" onclick="abrirModalCuenta('${c.id}')">✏️</button>${ok?`<button class="btn-icono" onclick="eliminarCuenta('${c.id}')">🗑</button>`:''}</div></div>`;
   }).join('');
-  document.getElementById('totalBalance').textContent = '$' + total.toFixed(2);
+  document.getElementById('totalBalance').textContent='$'+total.toFixed(2);
 }
 
-// ==================== MODAL CUENTA ====================
 function abrirModalCuenta(id){
-  editandoCuentaId = id;
-  document.getElementById('tituloModalCuenta').textContent = id ? 'Editar Cuenta' : 'Nueva Cuenta';
-  if(id){
-    const c = datos.cuentas.find(c => c.id === id);
-    document.getElementById('cuentaNombre').value = c.nombre;
-    document.getElementById('cuentaSaldo').value  = c.saldo.toFixed(2);
-  } else {
-    document.getElementById('cuentaNombre').value = '';
-    document.getElementById('cuentaSaldo').value  = '';
-  }
-  document.getElementById('modalCuenta').classList.add('active');
-  document.body.style.overflow = 'hidden';
+  editandoCuentaId=id;
+  document.getElementById('tituloModalCuenta').textContent=id?'Editar Cuenta':'Nueva Cuenta';
+  if(id){ const c=datos.cuentas.find(c=>c.id===id); document.getElementById('cuentaNombre').value=c.nombre; document.getElementById('cuentaSaldo').value=c.saldo.toFixed(2); }
+  else { document.getElementById('cuentaNombre').value=''; document.getElementById('cuentaSaldo').value=''; }
+  document.getElementById('modalCuenta').classList.add('active'); document.body.style.overflow='hidden';
 }
-function cerrarModalCuenta(){
-  document.getElementById('modalCuenta').classList.remove('active');
-  document.body.style.overflow = '';
-  editandoCuentaId = null;
-}
+function cerrarModalCuenta(){ document.getElementById('modalCuenta').classList.remove('active'); document.body.style.overflow=''; editandoCuentaId=null; }
 function guardarCuenta(){
-  const nombre = document.getElementById('cuentaNombre').value.trim();
-  const saldo  = parseFloat(document.getElementById('cuentaSaldo').value) || 0;
+  const nombre=document.getElementById('cuentaNombre').value.trim();
+  const saldo=parseFloat(document.getElementById('cuentaSaldo').value)||0;
   if(!nombre){ alert('Ingresa el nombre de la cuenta'); return; }
-  if(editandoCuentaId){
-    const c = datos.cuentas.find(c => c.id === editandoCuentaId);
-    c.nombre = nombre; c.saldo = saldo;
-  } else {
-    datos.cuentas.push({ id: Date.now().toString(), nombre, saldo });
-  }
+  if(editandoCuentaId){ const c=datos.cuentas.find(c=>c.id===editandoCuentaId); c.nombre=nombre; c.saldo=saldo; }
+  else datos.cuentas.push({id:Date.now().toString(),nombre,saldo});
   guardarDatos(); cerrarModalCuenta(); renderCuentas();
 }
 function eliminarCuenta(id){
-  const c = datos.cuentas.find(c => c.id === id);
+  const c=datos.cuentas.find(c=>c.id===id);
   if(!confirm(`¿Eliminar la cuenta "${c.nombre}"?`)) return;
-  datos.cuentas = datos.cuentas.filter(c => c.id !== id);
-  guardarDatos(); renderCuentas();
+  datos.cuentas=datos.cuentas.filter(c=>c.id!==id); guardarDatos(); renderCuentas();
 }
 
-// ==================== CATEGORÍAS (selector en modal movimiento) ====================
 function cargarCategorias(){
-  const grupoCategoria    = document.getElementById('grupoCategoria');
-  const grupoSubcategoria = document.getElementById('grupoSubcategoria');
-  if(tipoActual === 'transferencia'){
-    grupoCategoria.style.display    = 'none';
-    grupoSubcategoria.style.display = 'none';
-    return;
-  }
-  grupoCategoria.style.display    = 'block';
-  grupoSubcategoria.style.display = 'block';
-  const select = document.getElementById('categoria');
-  const cats   = datos.categorias.filter(c => c.tipo === tipoActual && !c.padre);
-  select.innerHTML = '<option value="">Selecciona...</option>';
-  cats.forEach(c => { select.innerHTML += `<option value="${c.id}">${c.nombre}</option>`; });
+  const gc=document.getElementById('grupoCategoria'), gs=document.getElementById('grupoSubcategoria');
+  if(tipoActual==='transferencia'){ gc.style.display=gs.style.display='none'; return; }
+  gc.style.display=gs.style.display='block';
+  const sel=document.getElementById('categoria');
+  sel.innerHTML='<option value="">Selecciona...</option>';
+  datos.categorias.filter(c=>c.tipo===tipoActual&&!c.padre).forEach(c=>{ sel.innerHTML+=`<option value="${c.id}">${c.nombre}</option>`; });
   cargarSubcategorias();
 }
 function cargarSubcategorias(){
-  const catId  = document.getElementById('categoria').value;
-  const select = document.getElementById('subcategoria');
-  const subs   = datos.categorias.filter(c => c.padre === catId);
-  select.innerHTML = '<option value="">-- Ninguna --</option>';
-  subs.forEach(s => { select.innerHTML += `<option value="${s.id}">${s.nombre}</option>`; });
+  const catId=document.getElementById('categoria').value, sel=document.getElementById('subcategoria');
+  sel.innerHTML='<option value="">-- Ninguna --</option>';
+  datos.categorias.filter(c=>c.padre===catId).forEach(s=>{ sel.innerHTML+=`<option value="${s.id}">${s.nombre}</option>`; });
 }
 
-// ==================== MODAL CATEGORÍAS (gestión) ====================
 function abrirModalCategorias(){
-  tipoCatActual = 'ingreso';
+  tipoCatActual='ingreso';
   document.getElementById('catTabIngreso').classList.add('active');
   document.getElementById('catTabGasto').classList.remove('active');
   document.getElementById('modalCategorias').classList.add('active');
-  document.body.style.overflow = 'hidden';
-  renderCategorias();
+  document.body.style.overflow='hidden'; renderCategorias();
 }
-function cerrarModalCategorias(){
-  document.getElementById('modalCategorias').classList.remove('active');
-  document.body.style.overflow = '';
-}
-function cambiarTipoCat(tipo, el){
-  tipoCatActual = tipo;
-  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  renderCategorias();
+function cerrarModalCategorias(){ document.getElementById('modalCategorias').classList.remove('active'); document.body.style.overflow=''; }
+function cambiarTipoCat(tipo,el){
+  tipoCatActual=tipo;
+  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active'); renderCategorias();
 }
 function renderCategorias(){
-  const contenedor = document.getElementById('listaCategorias');
-  const padres     = datos.categorias.filter(c => c.tipo === tipoCatActual && !c.padre);
-  if(padres.length === 0){
-    contenedor.innerHTML = '<div class="empty-state">Sin categorías. Agrega una.</div>';
-    return;
-  }
-  contenedor.innerHTML = padres.map(padre => {
-    const hijos = datos.categorias.filter(c => c.padre === padre.id);
-    return `
-      <div class="cat-grupo">
-        <div class="cat-padre-row">
-          <span class="cat-padre-nombre">${padre.nombre}</span>
-          <div class="cat-acciones">
-            <button class="btn-icono" onclick="abrirFormCat('${padre.id}', null)" title="Editar">✏️</button>
-            <button class="btn-icono" onclick="abrirFormCat(null, '${padre.id}')" title="+ Subcategoría" style="font-size:18px;opacity:0.5;">⊕</button>
-            <button class="btn-icono" onclick="eliminarCategoria('${padre.id}')" title="Eliminar">🗑</button>
-          </div>
-        </div>
-        ${hijos.map(h => `
-          <div class="cat-hijo-row">
-            <span class="cat-hijo-nombre">↳ ${h.nombre}</span>
-            <div class="cat-acciones">
-              <button class="btn-icono" onclick="abrirFormCat('${h.id}', null)" title="Editar">✏️</button>
-              <button class="btn-icono" onclick="eliminarCategoria('${h.id}')" title="Eliminar">🗑</button>
-            </div>
-          </div>
-        `).join('')}
-      </div>`;
+  const cont=document.getElementById('listaCategorias');
+  const padres=datos.categorias.filter(c=>c.tipo===tipoCatActual&&!c.padre);
+  if(!padres.length){ cont.innerHTML='<div class="empty-state">Sin categorías. Agrega una.</div>'; return; }
+  cont.innerHTML=padres.map(p=>{
+    const hijos=datos.categorias.filter(c=>c.padre===p.id);
+    return `<div class="cat-grupo"><div class="cat-padre-row"><span class="cat-padre-nombre">${p.nombre}</span><div class="cat-acciones"><button class="btn-icono" onclick="abrirFormCat('${p.id}',null)">✏️</button><button class="btn-icono" onclick="abrirFormCat(null,'${p.id}')" style="font-size:18px;opacity:0.5;">⊕</button><button class="btn-icono" onclick="eliminarCategoria('${p.id}')">🗑</button></div></div>${hijos.map(h=>`<div class="cat-hijo-row"><span class="cat-hijo-nombre">↳ ${h.nombre}</span><div class="cat-acciones"><button class="btn-icono" onclick="abrirFormCat('${h.id}',null)">✏️</button><button class="btn-icono" onclick="eliminarCategoria('${h.id}')">🗑</button></div></div>`).join('')}</div>`;
   }).join('');
 }
 
-// ==================== FORM CATEGORÍA (sub-modal) ====================
-function abrirFormCat(id, padrePresel){
-  editandoCatId = id;
-  const padres = datos.categorias.filter(c => c.tipo === tipoCatActual && !c.padre && c.id !== id);
-  const select = document.getElementById('catPadre');
-  select.innerHTML = '<option value="">-- Ninguna (categoría principal) --</option>';
-  padres.forEach(p => { select.innerHTML += `<option value="${p.id}">${p.nombre}</option>`; });
-  if(id){
-    const cat = datos.categorias.find(c => c.id === id);
-    document.getElementById('tituloFormCat').textContent = 'Editar Categoría';
-    document.getElementById('catNombre').value = cat.nombre;
-    select.value = cat.padre || '';
-  } else {
-    document.getElementById('tituloFormCat').textContent = padrePresel ? 'Nueva Subcategoría' : 'Nueva Categoría';
-    document.getElementById('catNombre').value = '';
-    select.value = padrePresel || '';
-  }
+function abrirFormCat(id,padrePresel){
+  editandoCatId=id;
+  const padres=datos.categorias.filter(c=>c.tipo===tipoCatActual&&!c.padre&&c.id!==id);
+  const sel=document.getElementById('catPadre');
+  sel.innerHTML='<option value="">-- Ninguna (categoría principal) --</option>';
+  padres.forEach(p=>{ sel.innerHTML+=`<option value="${p.id}">${p.nombre}</option>`; });
+  if(id){ const cat=datos.categorias.find(c=>c.id===id); document.getElementById('tituloFormCat').textContent='Editar Categoría'; document.getElementById('catNombre').value=cat.nombre; sel.value=cat.padre||''; }
+  else { document.getElementById('tituloFormCat').textContent=padrePresel?'Nueva Subcategoría':'Nueva Categoría'; document.getElementById('catNombre').value=''; sel.value=padrePresel||''; }
   document.getElementById('modalFormCat').classList.add('active');
 }
-function cerrarFormCat(){
-  document.getElementById('modalFormCat').classList.remove('active');
-  editandoCatId = null;
-}
+function cerrarFormCat(){ document.getElementById('modalFormCat').classList.remove('active'); editandoCatId=null; }
 function guardarCategoria(){
-  const nombre = document.getElementById('catNombre').value.trim();
-  const padre  = document.getElementById('catPadre').value || null;
+  const nombre=document.getElementById('catNombre').value.trim();
+  const padre=document.getElementById('catPadre').value||null;
   if(!nombre){ alert('Ingresa un nombre'); return; }
-  if(editandoCatId){
-    const cat = datos.categorias.find(c => c.id === editandoCatId);
-    cat.nombre = nombre; cat.padre = padre;
-  } else {
-    datos.categorias.push({ id: 'c' + Date.now(), nombre, tipo: tipoCatActual, padre });
-  }
+  if(editandoCatId){ const cat=datos.categorias.find(c=>c.id===editandoCatId); cat.nombre=nombre; cat.padre=padre; }
+  else datos.categorias.push({id:'c'+Date.now(),nombre,tipo:tipoCatActual,padre});
   guardarDatos(); cerrarFormCat(); renderCategorias();
 }
 function eliminarCategoria(id){
-  const cat   = datos.categorias.find(c => c.id === id);
-  const enUso = datos.movimientos.some(m => m.categoria === id || m.subcategoria === id);
-  const hijos = datos.categorias.filter(c => c.padre === id);
-  if(enUso){
-    alert(`No se puede eliminar "${cat.nombre}": está siendo usada en movimientos registrados.`);
-    return;
-  }
-  if(hijos.length > 0){
-    if(!confirm(`"${cat.nombre}" tiene ${hijos.length} subcategoría(s). ¿Eliminar todo?`)) return;
-    datos.categorias = datos.categorias.filter(c => c.id !== id && c.padre !== id);
-  } else {
-    if(!confirm(`¿Eliminar la categoría "${cat.nombre}"?`)) return;
-    datos.categorias = datos.categorias.filter(c => c.id !== id);
-  }
+  const cat=datos.categorias.find(c=>c.id===id);
+  const enUso=datos.movimientos.some(m=>m.categoria===id||m.subcategoria===id);
+  const hijos=datos.categorias.filter(c=>c.padre===id);
+  if(enUso){ alert(`No se puede eliminar "${cat.nombre}": está en uso en movimientos.`); return; }
+  if(hijos.length){ if(!confirm(`"${cat.nombre}" tiene ${hijos.length} subcategoría(s). ¿Eliminar todo?`)) return; datos.categorias=datos.categorias.filter(c=>c.id!==id&&c.padre!==id); }
+  else { if(!confirm(`¿Eliminar la categoría "${cat.nombre}"?`)) return; datos.categorias=datos.categorias.filter(c=>c.id!==id); }
   guardarDatos(); renderCategorias();
 }
 
-// ==================== FOTO ====================
 function previewFoto(){
-  const input = document.getElementById('fotoRecibo');
-  if(input.files && input.files[0]){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      fotoBase64 = e.target.result;
-      const preview = document.getElementById('previewFoto');
-      preview.src = fotoBase64; preview.style.display = 'block';
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
+  const inp=document.getElementById('fotoRecibo');
+  if(inp.files&&inp.files[0]){ const r=new FileReader(); r.onload=e=>{ fotoBase64=e.target.result; const p=document.getElementById('previewFoto'); p.src=fotoBase64; p.style.display='block'; }; r.readAsDataURL(inp.files[0]); }
 }
 
-// ==================== GUARDAR MOVIMIENTO ====================
 function guardarMovimiento(){
-  const monto        = parseFloat(document.getElementById('monto').value);
-  const categoria    = document.getElementById('categoria').value;
-  const subcategoria = document.getElementById('subcategoria').value;
-  const concepto     = document.getElementById('concepto').value.trim();
-  const fecha        = document.getElementById('fecha').value;
-  const origen       = document.getElementById('origen').value;
-  const destino      = document.getElementById('destino').value;
-  if(!monto || monto <= 0){ alert('Ingresa un monto válido'); return; }
-  if(tipoActual !== 'transferencia' && !categoria){ alert('Selecciona una categoría'); return; }
+  const monto=parseFloat(document.getElementById('monto').value);
+  const categoria=document.getElementById('categoria').value;
+  const subcategoria=document.getElementById('subcategoria').value;
+  const concepto=document.getElementById('concepto').value.trim();
+  const fecha=document.getElementById('fecha').value;
+  const origen=document.getElementById('origen').value;
+  const destino=document.getElementById('destino').value;
+  if(!monto||monto<=0){ alert('Ingresa un monto válido'); return; }
+  if(tipoActual!=='transferencia'&&!categoria){ alert('Selecciona una categoría'); return; }
   if(!fecha){ alert('Selecciona fecha'); return; }
-  if(tipoActual === 'ingreso'      && !destino){ alert('Selecciona cuenta destino'); return; }
-  if(tipoActual === 'gasto'        && !origen) { alert('Selecciona cuenta origen');  return; }
-  if(tipoActual === 'transferencia' && (!origen || !destino)){ alert('Selecciona origen y destino'); return; }
-  if(tipoActual === 'transferencia' && origen === destino){ alert('Origen y destino deben ser diferentes'); return; }
+  if(tipoActual==='ingreso'&&!destino){ alert('Selecciona cuenta destino'); return; }
+  if(tipoActual==='gasto'&&!origen){ alert('Selecciona cuenta origen'); return; }
+  if(tipoActual==='transferencia'&&(!origen||!destino)){ alert('Selecciona origen y destino'); return; }
+  if(tipoActual==='transferencia'&&origen===destino){ alert('Origen y destino deben ser diferentes'); return; }
   if(editandoId){
-    const orig = datos.movimientos.find(m => m.id === editandoId);
+    const orig=datos.movimientos.find(m=>m.id===editandoId);
     if(orig){
-      if(orig.tipo === 'ingreso'){ const c = datos.cuentas.find(c => c.id === orig.destino); if(c) c.saldo -= orig.monto; }
-      else if(orig.tipo === 'gasto'){ const c = datos.cuentas.find(c => c.id === orig.origen); if(c) c.saldo += orig.monto; }
-      else if(orig.tipo === 'transferencia'){
-        const co = datos.cuentas.find(c => c.id === orig.origen);
-        const cd = datos.cuentas.find(c => c.id === orig.destino);
-        if(co) co.saldo += orig.monto; if(cd) cd.saldo -= orig.monto;
-      }
-      datos.movimientos = datos.movimientos.filter(m => m.id !== editandoId);
+      if(orig.tipo==='ingreso'){ const c=datos.cuentas.find(c=>c.id===orig.destino); if(c) c.saldo-=orig.monto; }
+      else if(orig.tipo==='gasto'){ const c=datos.cuentas.find(c=>c.id===orig.origen); if(c) c.saldo+=orig.monto; }
+      else{ const co=datos.cuentas.find(c=>c.id===orig.origen),cd=datos.cuentas.find(c=>c.id===orig.destino); if(co) co.saldo+=orig.monto; if(cd) cd.saldo-=orig.monto; }
+      datos.movimientos=datos.movimientos.filter(m=>m.id!==editandoId);
     }
-    editandoId = null;
+    editandoId=null;
   }
-  if(tipoActual === 'gasto' || tipoActual === 'transferencia'){
-    const ctaOrigen = datos.cuentas.find(c => c.id === origen);
-    if(ctaOrigen && ctaOrigen.saldo < monto){
-      const alerta = document.getElementById('alertaSaldo');
-      alerta.classList.add('active');
-      alerta.scrollIntoView({behavior:'smooth', block:'nearest'});
-      return;
-    }
+  if(tipoActual==='gasto'||tipoActual==='transferencia'){
+    const co=datos.cuentas.find(c=>c.id===origen);
+    if(co&&co.saldo<monto){ const a=document.getElementById('alertaSaldo'); a.classList.add('active'); a.scrollIntoView({behavior:'smooth',block:'nearest'}); return; }
   }
-  const movimiento = {
-    id: Date.now().toString(), tipo: tipoActual, monto,
-    categoria:    tipoActual === 'transferencia' ? null : (categoria || null),
-    subcategoria: tipoActual === 'transferencia' ? null : (subcategoria || null),
-    concepto, fecha,
-    origen: origen || null, destino: destino || null,
-    foto: fotoBase64, creado: new Date().toISOString()
-  };
-  if(tipoActual === 'ingreso'){ datos.cuentas.find(c => c.id === destino).saldo += monto; }
-  else if(tipoActual === 'gasto'){ datos.cuentas.find(c => c.id === origen).saldo -= monto; }
-  else if(tipoActual === 'transferencia'){
-    datos.cuentas.find(c => c.id === origen).saldo  -= monto;
-    datos.cuentas.find(c => c.id === destino).saldo += monto;
-  }
-  datos.movimientos.push(movimiento);
+  const mov={id:Date.now().toString(),tipo:tipoActual,monto,
+    categoria:tipoActual==='transferencia'?null:(categoria||null),
+    subcategoria:tipoActual==='transferencia'?null:(subcategoria||null),
+    concepto,fecha,origen:origen||null,destino:destino||null,foto:fotoBase64,creado:new Date().toISOString()};
+  if(tipoActual==='ingreso') datos.cuentas.find(c=>c.id===destino).saldo+=monto;
+  else if(tipoActual==='gasto') datos.cuentas.find(c=>c.id===origen).saldo-=monto;
+  else{ datos.cuentas.find(c=>c.id===origen).saldo-=monto; datos.cuentas.find(c=>c.id===destino).saldo+=monto; }
+  datos.movimientos.push(mov);
   guardarDatos(); cerrarModal(); renderCuentas(); renderMovimientos(); renderReportes();
 }
 
-// ==================== EDITAR MOVIMIENTO ====================
 function editarMovimiento(id){
-  const m = datos.movimientos.find(x => x.id === id); if(!m) return;
-  editandoId = id; tipoActual = m.tipo;
-  abrirModal();
-  setTimeout(() => {
+  const m=datos.movimientos.find(x=>x.id===id); if(!m) return;
+  editandoId=id; tipoActual=m.tipo; abrirModal();
+  setTimeout(()=>{
     setTipo(m.tipo);
-    document.getElementById('monto').value    = m.monto;
-    document.getElementById('concepto').value = m.concepto || '';
-    document.getElementById('fecha').value    = m.fecha;
-    if(m.origen)  document.getElementById('origen').value  = m.origen;
-    if(m.destino) document.getElementById('destino').value = m.destino;
-    if(m.categoria){
-      document.getElementById('categoria').value = m.categoria;
-      cargarSubcategorias();
-      if(m.subcategoria) document.getElementById('subcategoria').value = m.subcategoria;
-    }
-    if(m.foto){
-      fotoBase64 = m.foto;
-      const preview = document.getElementById('previewFoto');
-      preview.src = m.foto; preview.style.display = 'block';
-    }
-  }, 50);
+    document.getElementById('monto').value=m.monto;
+    document.getElementById('concepto').value=m.concepto||'';
+    document.getElementById('fecha').value=m.fecha;
+    if(m.origen) document.getElementById('origen').value=m.origen;
+    if(m.destino) document.getElementById('destino').value=m.destino;
+    if(m.categoria){ document.getElementById('categoria').value=m.categoria; cargarSubcategorias(); if(m.subcategoria) document.getElementById('subcategoria').value=m.subcategoria; }
+    if(m.foto){ fotoBase64=m.foto; const p=document.getElementById('previewFoto'); p.src=m.foto; p.style.display='block'; }
+  },50);
 }
 
-// ==================== MOVIMIENTOS ====================
-function filtrarMovimientos(filtro, el){
-  filtroActual = filtro;
-  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  renderMovimientos();
+function filtrarMovimientos(filtro,el){
+  filtroActual=filtro;
+  document.querySelectorAll('.filtro-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active'); renderMovimientos();
 }
 function renderMovimientos(){
-  const contenedor = document.getElementById('listaMovimientos');
-  let movs = [...datos.movimientos].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
-  if(filtroActual === 'ingreso') movs = movs.filter(m => m.tipo === 'ingreso');
-  if(filtroActual === 'gasto')   movs = movs.filter(m => m.tipo === 'gasto');
-  if(filtroActual === 'hoy'){
-    const hoy = new Date().toDateString();
-    movs = movs.filter(m => new Date(m.fecha).toDateString() === hoy);
-  }
-  if(movs.length === 0){ contenedor.innerHTML = '<div class="empty-state">Sin movimientos</div>'; return; }
-  contenedor.innerHTML = movs.map(m => {
-    const cat        = m.categoria    ? datos.categorias.find(c => c.id === m.categoria)    : null;
-    const sub        = m.subcategoria ? datos.categorias.find(c => c.id === m.subcategoria) : null;
-    const ctaOrigen  = m.origen  ? datos.cuentas.find(c => c.id === m.origen)  : null;
-    const ctaDestino = m.destino ? datos.cuentas.find(c => c.id === m.destino) : null;
-    let detalleCuenta = '';
-    if(m.tipo === 'ingreso')    detalleCuenta = `→ ${ctaDestino?.nombre || ''}`;
-    else if(m.tipo === 'gasto') detalleCuenta = `← ${ctaOrigen?.nombre  || ''}`;
-    else                        detalleCuenta = `${ctaOrigen?.nombre || ''} → ${ctaDestino?.nombre || ''}`;
-    const signo    = m.tipo === 'ingreso' ? '+' : m.tipo === 'gasto' ? '-' : '⇄';
-    const etiqueta = cat ? `${cat.nombre}${sub ? ' › ' + sub.nombre : ''}` : 'Transferencia';
-    const fecha    = new Date(m.fecha).toLocaleString('es-MX', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
-    return `
-      <div class="movimiento-item">
-        <div class="movimiento-acciones">
-          <button class="btn-icono" onclick="editarMovimiento('${m.id}')" title="Editar">✏️</button>
-          <button class="btn-icono" onclick="eliminarMovimiento('${m.id}')" title="Eliminar">🗑</button>
-        </div>
-        <div class="movimiento-header">
-          <span class="movimiento-categoria">${etiqueta}</span>
-          <span class="movimiento-monto ${m.tipo}">${signo}$${m.monto.toFixed(2)}</span>
-        </div>
-        ${m.concepto ? `<div class="movimiento-detalle">${m.concepto}</div>` : ''}
-        <div class="movimiento-detalle">${detalleCuenta}</div>
-        ${m.foto ? `<img src="${m.foto}" class="foto-recibo" onclick="toggleZoom(this)">` : ''}
-        <div class="movimiento-fecha">${fecha}</div>
-      </div>`;
+  const cont=document.getElementById('listaMovimientos');
+  let movs=[...datos.movimientos].sort((a,b)=>new Date(b.fecha)-new Date(a.fecha));
+  if(filtroActual==='ingreso') movs=movs.filter(m=>m.tipo==='ingreso');
+  if(filtroActual==='gasto')   movs=movs.filter(m=>m.tipo==='gasto');
+  if(filtroActual==='hoy'){ const h=new Date().toDateString(); movs=movs.filter(m=>new Date(m.fecha).toDateString()===h); }
+  if(!movs.length){ cont.innerHTML='<div class="empty-state">Sin movimientos</div>'; return; }
+  cont.innerHTML=movs.map(m=>{
+    const cat=m.categoria?datos.categorias.find(c=>c.id===m.categoria):null;
+    const sub=m.subcategoria?datos.categorias.find(c=>c.id===m.subcategoria):null;
+    const co=m.origen?datos.cuentas.find(c=>c.id===m.origen):null;
+    const cd=m.destino?datos.cuentas.find(c=>c.id===m.destino):null;
+    let det=m.tipo==='ingreso'?`→ ${cd?.nombre||''}`:(m.tipo==='gasto'?`← ${co?.nombre||''}`:`${co?.nombre||''} → ${cd?.nombre||""}`);
+    const signo=m.tipo==='ingreso'?'+':(m.tipo==='gasto'?'-':'⇄');
+    const etq=cat?`${cat.nombre}${sub?' › '+sub.nombre:''}`:'Transferencia';
+    const fec=new Date(m.fecha).toLocaleString('es-MX',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    return `<div class="movimiento-item"><div class="movimiento-acciones"><button class="btn-icono" onclick="editarMovimiento('${m.id}')">✏️</button><button class="btn-icono" onclick="eliminarMovimiento('${m.id}')">🗑</button></div><div class="movimiento-header"><span class="movimiento-categoria">${etq}</span><span class="movimiento-monto ${m.tipo}">${signo}$${m.monto.toFixed(2)}</span></div>${m.concepto?`<div class="movimiento-detalle">${m.concepto}</div>`:''}<div class="movimiento-detalle">${det}</div>${m.foto?`<img src="${m.foto}" class="foto-recibo" onclick="toggleZoom(this)">`:''}<div class="movimiento-fecha">${fec}</div></div>`;
   }).join('');
 }
-function toggleZoom(img){
-  img.style.transform = img.style.transform === 'scale(2)' ? 'scale(1)' : 'scale(2)';
-}
+function toggleZoom(img){ img.style.transform=img.style.transform==='scale(2)'?'scale(1)':'scale(2)'; }
 function eliminarMovimiento(id){
   if(!confirm('¿Eliminar este movimiento?')) return;
-  const idx = datos.movimientos.findIndex(m => m.id === id); if(idx === -1) return;
-  const m   = datos.movimientos[idx];
-  if(m.tipo === 'ingreso'){ const c = datos.cuentas.find(c => c.id === m.destino); if(c) c.saldo -= m.monto; }
-  else if(m.tipo === 'gasto'){ const c = datos.cuentas.find(c => c.id === m.origen); if(c) c.saldo += m.monto; }
-  else if(m.tipo === 'transferencia'){
-    const co = datos.cuentas.find(c => c.id === m.origen);
-    const cd = datos.cuentas.find(c => c.id === m.destino);
-    if(co) co.saldo += m.monto; if(cd) cd.saldo -= m.monto;
-  }
-  datos.movimientos.splice(idx, 1);
-  guardarDatos(); renderCuentas(); renderMovimientos(); renderReportes();
+  const idx=datos.movimientos.findIndex(m=>m.id===id); if(idx===-1) return;
+  const m=datos.movimientos[idx];
+  if(m.tipo==='ingreso'){ const c=datos.cuentas.find(c=>c.id===m.destino); if(c) c.saldo-=m.monto; }
+  else if(m.tipo==='gasto'){ const c=datos.cuentas.find(c=>c.id===m.origen); if(c) c.saldo+=m.monto; }
+  else{ const co=datos.cuentas.find(c=>c.id===m.origen),cd=datos.cuentas.find(c=>c.id===m.destino); if(co) co.saldo+=m.monto; if(cd) cd.saldo-=m.monto; }
+  datos.movimientos.splice(idx,1); guardarDatos(); renderCuentas(); renderMovimientos(); renderReportes();
 }
 
-// ==================== REPORTES ====================
 function renderReportes(){
-  const ahora     = new Date();
-  const mesActual = ahora.getMonth();
-  const añoActual = ahora.getFullYear();
-  const movsMes   = datos.movimientos.filter(m => {
-    const f = new Date(m.fecha);
-    return f.getMonth() === mesActual && f.getFullYear() === añoActual;
-  });
-  const ingresos = movsMes.filter(m => m.tipo === 'ingreso').reduce((a,m) => a + m.monto, 0);
-  const gastos   = movsMes.filter(m => m.tipo === 'gasto').reduce((a,m)   => a + m.monto, 0);
-  const balance  = ingresos - gastos;
-  const gastosPorCat = {};
-  movsMes.filter(m => m.tipo === 'gasto').forEach(m => {
-    const cat    = m.categoria ? datos.categorias.find(c => c.id === m.categoria) : null;
-    const nombre = cat ? cat.nombre : 'Sin categoría';
-    gastosPorCat[nombre] = (gastosPorCat[nombre] || 0) + m.monto;
-  });
-  let html = `
-    <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
-      <div style="text-align:center;">
-        <div style="font-size:12px;color:#888;">Ingresos</div>
-        <div style="color:var(--green);font-size:20px;font-weight:bold;">+$${ingresos.toFixed(2)}</div>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-size:12px;color:#888;">Gastos</div>
-        <div style="color:var(--red);font-size:20px;font-weight:bold;">-$${gastos.toFixed(2)}</div>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-size:12px;color:#888;">Balance</div>
-        <div style="color:${balance >= 0 ? 'var(--green)' : 'var(--red)'};font-size:20px;font-weight:bold;">$${balance.toFixed(2)}</div>
-      </div>
-    </div>
-    <div style="border-top:1px solid var(--border);padding-top:15px;">
-      <div style="font-size:12px;color:#888;margin-bottom:10px;">GASTOS POR CATEGORÍA</div>`;
-  const sortedCats = Object.entries(gastosPorCat).sort((a,b) => b[1] - a[1]);
-  if(sortedCats.length === 0){
-    html += '<div style="opacity:0.5;text-align:center;padding:20px;">Sin gastos este mes</div>';
-  } else {
-    sortedCats.forEach(([nombre, monto]) => {
-      const porcentaje = gastos > 0 ? (monto / gastos * 100).toFixed(1) : 0;
-      html += `
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
-          <span>${nombre}</span>
-          <div style="text-align:right;">
-            <div style="font-weight:bold;">$${monto.toFixed(2)}</div>
-            <div style="font-size:11px;color:#666;">${porcentaje}%</div>
-          </div>
-        </div>`;
-    });
-  }
-  html += '</div>';
-  document.getElementById('reporteMensual').innerHTML = html;
+  const ahora=new Date(), mes=ahora.getMonth(), anio=ahora.getFullYear();
+  const movsMes=datos.movimientos.filter(m=>{ const f=new Date(m.fecha); return f.getMonth()===mes&&f.getFullYear()===anio; });
+  const ingresos=movsMes.filter(m=>m.tipo==='ingreso').reduce((a,m)=>a+m.monto,0);
+  const gastos=movsMes.filter(m=>m.tipo==='gasto').reduce((a,m)=>a+m.monto,0);
+  const balance=ingresos-gastos;
+  const gpc={};
+  movsMes.filter(m=>m.tipo==='gasto').forEach(m=>{ const cat=m.categoria?datos.categorias.find(c=>c.id===m.categoria):null; const n=cat?cat.nombre:'Sin categoría'; gpc[n]=(gpc[n]||0)+m.monto; });
+  let html=`<div style="display:flex;justify-content:space-between;margin-bottom:20px;"><div style="text-align:center;"><div style="font-size:12px;color:#888;">Ingresos</div><div style="color:var(--green);font-size:20px;font-weight:bold;">+$${ingresos.toFixed(2)}</div></div><div style="text-align:center;"><div style="font-size:12px;color:#888;">Gastos</div><div style="color:var(--red);font-size:20px;font-weight:bold;">-$${gastos.toFixed(2)}</div></div><div style="text-align:center;"><div style="font-size:12px;color:#888;">Balance</div><div style="color:${balance>=0?'var(--green)':'var(--red)'};font-size:20px;font-weight:bold;">$${balance.toFixed(2)}</div></div></div><div style="border-top:1px solid var(--border);padding-top:15px;"><div style="font-size:12px;color:#888;margin-bottom:10px;">GASTOS POR CATEGORÍA</div>`;
+  const sc=Object.entries(gpc).sort((a,b)=>b[1]-a[1]);
+  if(!sc.length) html+='<div style="opacity:0.5;text-align:center;padding:20px;">Sin gastos este mes</div>';
+  else sc.forEach(([n,m])=>{ const p=gastos>0?(m/gastos*100).toFixed(1):0; html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);"><span>${n}</span><div style="text-align:right;"><div style="font-weight:bold;">$${m.toFixed(2)}</div><div style="font-size:11px;color:#666;">${p}%</div></div></div>`; });
+  html+='</div>';
+  document.getElementById('reporteMensual').innerHTML=html;
 }
 
-// ==================== INIT ====================
-cargarDatos();
-renderCuentas(); renderMovimientos(); renderReportes();
-
-document.getElementById('modalMovimiento').addEventListener('click', function(e){ if(e.target===this) cerrarModal(); });
-document.getElementById('modalCuenta').addEventListener('click',     function(e){ if(e.target===this) cerrarModalCuenta(); });
-document.getElementById('modalCategorias').addEventListener('click', function(e){ if(e.target===this) cerrarModalCategorias(); });
-document.getElementById('modalFormCat').addEventListener('click',    function(e){ if(e.target===this) cerrarFormCat(); });
+cargarDatos(); renderCuentas(); renderMovimientos(); renderReportes();
+document.getElementById('modalMovimiento').addEventListener('click',function(e){if(e.target===this)cerrarModal();});
+document.getElementById('modalCuenta').addEventListener('click',function(e){if(e.target===this)cerrarModalCuenta();});
+document.getElementById('modalCategorias').addEventListener('click',function(e){if(e.target===this)cerrarModalCategorias();});
+document.getElementById('modalFormCat').addEventListener('click',function(e){if(e.target===this)cerrarFormCat();});
 </script>
 </body>
 </html>
