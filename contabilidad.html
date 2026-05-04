@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Finanzas MAYAN TRIP</title>
+
+<style>
+:root{
+  --gold:#d4af37;
+  --gold-light:#f4d03f;
+  --dark:#0a0a0a;
+  --card:#111;
+  --border:#222;
+  --green:#4ade80;
+  --red:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--dark);
+  color:var(--gold);
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  padding-bottom:80px;
+}
+.header{
+  background:linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 100%);
+  padding:16px 15px;
+  border-bottom:2px solid var(--gold);
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.header h1{font-size:20px;display:flex;align-items:center;gap:8px;}
+.header-actions{display:flex;gap:8px;}
+.btn-header{
+  background:none;
+  border:1px solid var(--border);
+  border-radius:8px;
+  color:var(--gold);
+  font-size:18px;
+  padding:6px 10px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+}
+.btn-header:active{background:#1a1a1a;}
+.total-card{
+  background:linear-gradient(135deg,var(--gold) 0%,#b8941f 100%);
+  color:#000;
+  padding:20px;
+  border-radius:15px;
+  margin:15px;
+  text-align:center;
+}
+.total-label{font-size:12px;opacity:0.8;text-transform:uppercase;}
+.total-monto{font-size:32px;font-weight:bold;margin-top:5px;}
+.tabs{
+  display:flex;
+  gap:5px;
+  padding:10px 15px;
+  background:#0f0f0f;
+  position:sticky;
+  top:62px;
+  z-index:99;
+}
+.tab{
+  flex:1;
+  padding:12px 8px;
+  background:#1a1a1a;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:#666;
+  font-size:12px;
+  text-align:center;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.tab.active{
+  background:var(--gold);
+  color:#000;
+  font-weight:bold;
+}
+.section{display:none;}
+.section.active{display:block;}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:15px;
+  margin:10px 15px;
+}
+.card-title{
+  font-size:14px;
+  color:var(--gold);
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.cuenta-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.cuenta-item:last-child{border-bottom:none;}
+.cuenta-nombre{font-size:14px;flex:1;}
+.cuenta-saldo{font-size:16px;font-weight:bold;}
+.cuenta-saldo.positive{color:var(--green);}
+.cuenta-saldo.negative{color:var(--red);}
+.cuenta-acciones{display:flex;gap:4px;align-items:center;margin-left:10px;}
+.btn-icono{
+  background:none;
+  border:none;
+  font-size:16px;
+  cursor:pointer;
+  padding:4px 6px;
+  opacity:0.55;
+  line-height:1;
+}
+.btn-icono:hover{opacity:1;}
+.btn-nueva-cuenta{
+  width:100%;
+  padding:12px;
+  background:transparent;
+  border:1px dashed #333;
+  border-radius:10px;
+  color:#555;
+  font-size:14px;
+  cursor:pointer;
+  margin-top:10px;
+  text-align:center;
+}
+.btn-nueva-cuenta:hover{border-color:var(--gold);color:var(--gold);}
+.btn-fab{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  background:var(--gold);
+  color:#000;
+  border:none;
+  border-radius:50%;
+  font-size:28px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 20px rgba(212,175,55,0.3);
+  z-index:1000;
+}
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,0.9);
+  z-index:2000;
+  overflow-y:auto;
+}
+.modal.active{display:block;}
+.modal-content{
+  background:var(--dark);
+  min-height:100vh;
+  padding:20px 15px 100px;
+}
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  padding-bottom:15px;
+  border-bottom:2px solid var(--gold);
+}
+.modal-title{font-size:18px;}
+.btn-cerrar{
+  background:none;
+  border:none;
+  color:var(--gold);
+  font-size:28px;
+  cursor:pointer;
+}
+.form-group{margin-bottom:15px;}
+label{
+  display:block;
+  font-size:12px;
+  color:#888;
+  margin-bottom:5px;
+  text-transform:uppercase;
+}
+input,select{
+  width:100%;
+  padding:14px;
+  background:#1a1a1a;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:#fff;
+  font-size:16px;
+}
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--gold);
+}
+.tipo-selector{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+.tipo-btn{
+  flex:1;
+  padding:15px;
+  background:#1a1a1a;
+  border:2px solid var(--border);
+  border-radius:12px;
+  color:#666;
+  font-size:14px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.tipo-btn.active.ingreso{
+  background:rgba(74,222,128,0.2);
+  border-color:var(--green);
+  color:var(--green);
+}
+.tipo-btn.active.gasto{
+  background:rgba(239,68,68,0.2);
+  border-color:var(--red);
+  color:var(--red);
+}
+.tipo-btn.active.transferencia{
+  background:rgba(212,175,55,0.2);
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.btn-guardar{
+  width:100%;
+  padding:16px;
+  background:var(--gold);
+  color:#000;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:20px;
+}
+.movimiento-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:15px;
+  padding-right:80px;
+  margin:10px 15px;
+  position:relative;
+}
+.movimiento-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:8px;
+}
+.movimiento-categoria{
+  font-size:12px;
+  color:#888;
+  background:#1a1a1a;
+  padding:4px 10px;
+  border-radius:20px;
+}
+.movimiento-monto{
+  font-size:20px;
+  font-weight:bold;
+}
+.movimiento-monto.ingreso{color:var(--green);}
+.movimiento-monto.gasto{color:var(--red);}
+.movimiento-monto.transferencia{color:var(--gold);}
+.movimiento-detalle{
+  font-size:13px;
+  color:#aaa;
+  margin-top:5px;
+}
+.movimiento-fecha{
+  font-size:11px;
+  color:#666;
+  margin-top:8px;
+}
+.movimiento-acciones{
+  position:absolute;
+  top:10px;
+  right:8px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.empty-state{
+  text-align:center;
+  padding:40px 20px;
+  opacity:0.5;
+}
+.foto-recibo{
+  width:100%;
+  max-height:200px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-top:10px;
+  cursor:pointer;
+  transition:transform 0.2s;
+}
+.filtros{
+  display:flex;
+  gap:8px;
+  padding:0 15px 10px;
+  overflow-x:auto;
+}
+.filtro-btn{
+  padding:8px 16px;
+  background:#1a1a1a;
+  border:1px solid var(--border);
+  border-radius:20px;
+  color:#888;
+  font-size:12px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+.filtro-btn.active{
+  background:var(--gold);
+  color:#000;
+}
+.saldo-insuficiente{
+  background:rgba(239,68,68,0.1);
+  border:1px solid var(--red);
+  color:var(--red);
+  padding:12px;
+  border-radius:8px;
+  font-size:13px;
+  margin-bottom:15px;
+  display:none;
+}
+.saldo-insuficiente.active{display:block;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>💰 MAYAN TRIP</h1>
+  <div class="header-actions">
+    <button class="btn-header" onclick="exportarDatos()" title="Exportar datos">📤</button>
+    <label class="btn-header" title="Importar datos" style="margin:0;cursor:pointer;">
+      📥<input type="file" id="fileImport" accept=".json" style="display:none" onchange="importarDatos(event)">
+    </label>
+  </div>
+</div>
+
+<div class="total-card">
+  <div class="total-label">Balance Total</div>
+  <div class="total-monto" id="totalBalance">$0.00</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="cambiarTab('cuentas', this)">Cuentas</div>
+  <div class="tab" onclick="cambiarTab('movimientos', this)">Movimientos</div>
+  <div class="tab" onclick="cambiarTab('reportes', this)">Reportes</div>
+</div>
+
+<div id="section-cuentas" class="section active">
+  <div class="card">
+    <div class="card-title">💳 Tus Cuentas</div>
+    <div id="listaCuentas"></div>
+    <button class="btn-nueva-cuenta" onclick="abrirModalCuenta(null)">+ Nueva Cuenta</button>
+  </div>
+</div>
+
+<div id="section-movimientos" class="section">
+  <div class="filtros">
+    <button class="filtro-btn active" onclick="filtrarMovimientos('todos', this)">Todos</button>
+    <button class="filtro-btn" onclick="filtrarMovimientos('ingreso', this)">Ingresos</button>
+    <button class="filtro-btn" onclick="filtrarMovimientos('gasto', this)">Gastos</button>
+    <button class="filtro-btn" onclick="filtrarMovimientos('hoy', this)">Hoy</button>
+  </div>
+  <div id="listaMovimientos"></div>
+</div>
+
+<div id="section-reportes" class="section">
+  <div class="card">
+    <div class="card-title">📊 Este Mes</div>
+    <div id="reporteMensual"></div>
+  </div>
+</div>
+
+<button class="btn-fab" onclick="abrirModal()">+</button>
+
+<!-- Modal Movimiento -->
+<div id="modalMovimiento" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title" id="tituloModalMov">Nuevo Movimiento</div>
+      <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
+    </div>
+
+    <div class="tipo-selector">
+      <button class="tipo-btn ingreso" onclick="setTipo('ingreso', this)">Ingreso</button>
+      <button class="tipo-btn gasto" onclick="setTipo('gasto', this)">Gasto</button>
+      <button class="tipo-btn transferencia" onclick="setTipo('transferencia', this)">Transferir</button>
+    </div>
+
+    <div class="saldo-insuficiente" id="alertaSaldo">
+      ⚠️ Saldo insuficiente en cuenta origen
+    </div>
+
+    <div class="form-group" id="grupoOrigen" style="display:none;">
+      <label>Desde (Origen)</label>
+      <select id="origen"></select>
+    </div>
+
+    <div class="form-group" id="grupoDestino">
+      <label>Hacia (Destino)</label>
+      <select id="destino"></select>
+    </div>
+
+    <div class="form-group" id="grupoCategoria">
+      <label>Categoría</label>
+      <select id="categoria" onchange="cargarSubcategorias()"></select>
+    </div>
+
+    <div class="form-group" id="grupoSubcategoria">
+      <label>Subcategoría (opcional)</label>
+      <select id="subcategoria"></select>
+    </div>
+
+    <div class="form-group">
+      <label>Monto</label>
+      <input type="number" id="monto" placeholder="0.00" step="0.01">
+    </div>
+
+    <div class="form-group">
+      <label>Concepto / Nota</label>
+      <input type="text" id="concepto" placeholder="Ej: Tour García">
+    </div>
+
+    <div class="form-group">
+      <label>Fecha</label>
+      <input type="datetime-local" id="fecha">
+    </div>
+
+    <div class="form-group">
+      <label>Foto del Recibo (opcional)</label>
+      <input type="file" id="fotoRecibo" accept="image/*" capture="environment" onchange="previewFoto()">
+      <img id="previewFoto" class="foto-recibo" style="display:none;">
+    </div>
+
+    <button class="btn-guardar" onclick="guardarMovimiento()">Guardar</button>
+  </div>
+</div>
+
+<!-- Modal Cuenta -->
+<div id="modalCuenta" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title" id="tituloModalCuenta">Nueva Cuenta</div>
+      <button class="btn-cerrar" onclick="cerrarModalCuenta()">&times;</button>
+    </div>
+    <div class="form-group">
+      <label>Nombre de la cuenta</label>
+      <input type="text" id="cuentaNombre" placeholder="Ej: 💵 Efectivo">
+    </div>
+    <div class="form-group">
+      <label>Saldo actual</label>
+      <input type="number" id="cuentaSaldo" placeholder="0.00" step="0.01">
+    </div>
+    <button class="btn-guardar" onclick="guardarCuenta()">Guardar</button>
+  </div>
+</div>
+
+<script>
+// ==================== DATOS ====================
+let datos = {
+  cuentas:[
+    {id:'efectivo',nombre:'💵 Efectivo',saldo:0},
+    {id:'bbva',nombre:'🏦 BBVA',saldo:0},
+    {id:'santander',nombre:'🏦 Santander',saldo:0},
+    {id:'oxxo',nombre:'🟡 Spin Oxxo',saldo:0},
+    {id:'coppel',nombre:'🔵 BanCoppel',saldo:0},
+    {id:'clip',nombre:'💳 Clip',saldo:0}
+  ],
+  movimientos:[],
+  categorias:[
+    // INGRESOS
+    {id:'i1',nombre:'Clientes',tipo:'ingreso',padre:null},
+    {id:'i2',nombre:'Tours',tipo:'ingreso',padre:'i1'},
+    {id:'i3',nombre:'Privados',tipo:'ingreso',padre:'i1'},
+    {id:'i4',nombre:'Traslados',tipo:'ingreso',padre:'i1'},
+    {id:'i5',nombre:'Extras',tipo:'ingreso',padre:null},
+    {id:'i6',nombre:'Propinas',tipo:'ingreso',padre:'i5'},
+    {id:'i7',nombre:'Comisiones',tipo:'ingreso',padre:'i5'},
+    {id:'i8',nombre:'Otros',tipo:'ingreso',padre:null},
+    // GASTOS OPERACIÓN
+    {id:'g1',nombre:'Operación',tipo:'gasto',padre:null},
+    {id:'g2',nombre:'Gasolina',tipo:'gasto',padre:'g1'},
+    {id:'g3',nombre:'Mantenimiento',tipo:'gasto',padre:'g1'},
+    {id:'g4',nombre:'Refacciones',tipo:'gasto',padre:'g1'},
+    {id:'g5',nombre:'Lavado',tipo:'gasto',padre:'g1'},
+    {id:'g6',nombre:'Peajes',tipo:'gasto',padre:'g1'},
+    {id:'g7',nombre:'Estacionamiento',tipo:'gasto',padre:'g1'},
+    // GASTOS ADMIN
+    {id:'g8',nombre:'Administración',tipo:'gasto',padre:null},
+    {id:'g9',nombre:'Permisos',tipo:'gasto',padre:'g8'},
+    {id:'g10',nombre:'Seguro',tipo:'gasto',padre:'g8'},
+    {id:'g11',nombre:'Multas',tipo:'gasto',padre:'g8'},
+    {id:'g12',nombre:'Contador',tipo:'gasto',padre:'g8'},
+    // GASTOS PERSONALES
+    {id:'g13',nombre:'Personal',tipo:'gasto',padre:null},
+    {id:'g14',nombre:'Comida',tipo:'gasto',padre:'g13'},
+    {id:'g15',nombre:'Ocio',tipo:'gasto',padre:'g13'},
+    {id:'g16',nombre:'Ropa',tipo:'gasto',padre:'g13'},
+    {id:'g17',nombre:'Salud',tipo:'gasto',padre:'g13'},
+    // FINANZAS
+    {id:'g18',nombre:'Finanzas',tipo:'gasto',padre:null},
+    {id:'g19',nombre:'Deudas',tipo:'gasto',padre:'g18'},
+    {id:'g20',nombre:'Intereses',tipo:'gasto',padre:'g18'},
+    {id:'g21',nombre:'Comisiones',tipo:'gasto',padre:'g18'}
+  ]
+};
+
+let tipoActual = 'ingreso';
+let filtroActual = 'todos';
+let fotoBase64 = null;
+let editandoId = null;
+let editandoCuentaId = null;
+
+// ==================== LOCALSTORAGE ====================
+function guardarDatos(){
+  localStorage.setItem('finanzasMayanTrip', JSON.stringify(datos));
+}
+
+function cargarDatos(){
+  const guardado = localStorage.getItem('finanzasMayanTrip');
+  if(guardado){
+    const parsed = JSON.parse(guardado);
+    if(!parsed.categorias) parsed.categorias = datos.categorias;
+    datos = parsed;
+  }
+}
+
+// ==================== EXPORTAR / IMPORTAR ====================
+function exportarDatos(){
+  const blob = new Blob([JSON.stringify(datos, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'mayan-trip-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+function importarDatos(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    try {
+      const importado = JSON.parse(ev.target.result);
+      if(!importado.cuentas || !importado.movimientos) throw new Error('Formato inválido');
+      if(!importado.categorias) importado.categorias = datos.categorias;
+      datos = importado;
+      guardarDatos();
+      renderCuentas();
+      renderMovimientos();
+      renderReportes();
+      alert('✅ Datos importados correctamente');
+    } catch(err) {
+      alert('❌ Error al importar: archivo inválido');
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+// ==================== NAVEGACIÓN ====================
+function cambiarTab(tab, el){
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('section-' + tab).classList.add('active');
+  if(tab === 'cuentas') renderCuentas();
+  if(tab === 'movimientos') renderMovimientos();
+  if(tab === 'reportes') renderReportes();
+}
+
+// ==================== MODAL MOVIMIENTO ====================
+function abrirModal(){
+  document.getElementById('tituloModalMov').textContent = editandoId ? 'Editar Movimiento' : 'Nuevo Movimiento';
+  document.getElementById('modalMovimiento').classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  if(!editandoId){
+    const ahora = new Date();
+    ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
+    document.getElementById('fecha').value = ahora.toISOString().slice(0,16);
+  }
+
+  cargarCuentas();
+  setTipo(tipoActual);
+}
+
+function cerrarModal(){
+  document.getElementById('modalMovimiento').classList.remove('active');
+  document.body.style.overflow = '';
+  editandoId = null;
+  tipoActual = 'ingreso';
+  limpiarFormulario();
+}
+
+function limpiarFormulario(){
+  document.getElementById('monto').value = '';
+  document.getElementById('concepto').value = '';
+  document.getElementById('fotoRecibo').value = '';
+  document.getElementById('previewFoto').style.display = 'none';
+  fotoBase64 = null;
+  document.getElementById('alertaSaldo').classList.remove('active');
+}
+
+// FIX: acepta el elemento botón como parámetro para evitar depender del event global
+function setTipo(tipo, el){
+  tipoActual = tipo;
+  document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+  const btn = el || document.querySelector('.tipo-btn.' + tipo);
+  if(btn) btn.classList.add('active');
+
+  const grupoOrigen  = document.getElementById('grupoOrigen');
+  const grupoDestino = document.getElementById('grupoDestino');
+  const labelDestino = document.querySelector('#grupoDestino label');
+
+  if(tipo === 'ingreso'){
+    grupoOrigen.style.display  = 'none';
+    grupoDestino.style.display = 'block';
+    labelDestino.textContent   = 'A qué cuenta';
+  } else if(tipo === 'gasto'){
+    grupoOrigen.style.display  = 'block';
+    grupoDestino.style.display = 'none';
+    document.querySelector('#grupoOrigen label').textContent = 'De qué cuenta';
+  } else {
+    grupoOrigen.style.display  = 'block';
+    grupoDestino.style.display = 'block';
+    document.querySelector('#grupoOrigen label').textContent = 'Desde (Origen)';
+    labelDestino.textContent   = 'Hacia (Destino)';
+  }
+
+  cargarCategorias();
+}
+
+// ==================== CUENTAS (selector en modal) ====================
+function cargarCuentas(){
+  let html = '<option value="">Selecciona...</option>';
+  datos.cuentas.forEach(c => {
+    html += `<option value="${c.id}">${c.nombre} - $${c.saldo.toFixed(2)}</option>`;
+  });
+  document.getElementById('origen').innerHTML = html;
+  document.getElementById('destino').innerHTML = html;
+}
+
+function renderCuentas(){
+  const contenedor = document.getElementById('listaCuentas');
+  let total = 0;
+
+  contenedor.innerHTML = datos.cuentas.map(c => {
+    total += c.saldo;
+    const clase = c.saldo >= 0 ? 'positive' : 'negative';
+    const tieneMov = datos.movimientos.some(m => m.origen === c.id || m.destino === c.id);
+    return `
+      <div class="cuenta-item">
+        <span class="cuenta-nombre">${c.nombre}</span>
+        <div class="cuenta-acciones">
+          <span class="cuenta-saldo ${clase}">$${c.saldo.toFixed(2)}</span>
+          <button class="btn-icono" onclick="abrirModalCuenta('${c.id}')" title="Editar">✏️</button>
+          ${!tieneMov ? `<button class="btn-icono" onclick="eliminarCuenta('${c.id}')" title="Eliminar">🗑</button>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('totalBalance').textContent = '$' + total.toFixed(2);
+}
+
+// ==================== MODAL CUENTA ====================
+function abrirModalCuenta(id){
+  editandoCuentaId = id;
+  document.getElementById('tituloModalCuenta').textContent = id ? 'Editar Cuenta' : 'Nueva Cuenta';
+
+  if(id){
+    const c = datos.cuentas.find(c => c.id === id);
+    document.getElementById('cuentaNombre').value = c.nombre;
+    document.getElementById('cuentaSaldo').value  = c.saldo.toFixed(2);
+  } else {
+    document.getElementById('cuentaNombre').value = '';
+    document.getElementById('cuentaSaldo').value  = '';
+  }
+
+  document.getElementById('modalCuenta').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalCuenta(){
+  document.getElementById('modalCuenta').classList.remove('active');
+  document.body.style.overflow = '';
+  editandoCuentaId = null;
+}
+
+function guardarCuenta(){
+  const nombre = document.getElementById('cuentaNombre').value.trim();
+  const saldo  = parseFloat(document.getElementById('cuentaSaldo').value) || 0;
+
+  if(!nombre){ alert('Ingresa el nombre de la cuenta'); return; }
+
+  if(editandoCuentaId){
+    const c = datos.cuentas.find(c => c.id === editandoCuentaId);
+    c.nombre = nombre;
+    c.saldo  = saldo;
+  } else {
+    datos.cuentas.push({ id: Date.now().toString(), nombre, saldo });
+  }
+
+  guardarDatos();
+  cerrarModalCuenta();
+  renderCuentas();
+}
+
+function eliminarCuenta(id){
+  const c = datos.cuentas.find(c => c.id === id);
+  if(!confirm(`¿Eliminar la cuenta "${c.nombre}"?`)) return;
+  datos.cuentas = datos.cuentas.filter(c => c.id !== id);
+  guardarDatos();
+  renderCuentas();
+}
+
+// ==================== CATEGORÍAS ====================
+function cargarCategorias(){
+  const grupoCategoria    = document.getElementById('grupoCategoria');
+  const grupoSubcategoria = document.getElementById('grupoSubcategoria');
+
+  // FIX: transferencias no necesitan categoría
+  if(tipoActual === 'transferencia'){
+    grupoCategoria.style.display    = 'none';
+    grupoSubcategoria.style.display = 'none';
+    return;
+  }
+
+  grupoCategoria.style.display    = 'block';
+  grupoSubcategoria.style.display = 'block';
+
+  const select = document.getElementById('categoria');
+  const cats   = datos.categorias.filter(c => c.tipo === tipoActual && !c.padre);
+
+  select.innerHTML = '<option value="">Selecciona...</option>';
+  cats.forEach(c => {
+    select.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
+  });
+
+  cargarSubcategorias();
+}
+
+function cargarSubcategorias(){
+  const catId  = document.getElementById('categoria').value;
+  const select = document.getElementById('subcategoria');
+  const subs   = datos.categorias.filter(c => c.padre === catId);
+
+  select.innerHTML = '<option value="">-- Ninguna --</option>';
+  subs.forEach(s => {
+    select.innerHTML += `<option value="${s.id}">${s.nombre}</option>`;
+  });
+}
+
+// ==================== FOTO ====================
+function previewFoto(){
+  const input   = document.getElementById('fotoRecibo');
+  const preview = document.getElementById('previewFoto');
+
+  if(input.files && input.files[0]){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      fotoBase64    = e.target.result;
+      preview.src   = fotoBase64;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// ==================== GUARDAR MOVIMIENTO ====================
+function guardarMovimiento(){
+  const monto        = parseFloat(document.getElementById('monto').value);
+  const categoria    = document.getElementById('categoria').value;
+  const subcategoria = document.getElementById('subcategoria').value;
+  const concepto     = document.getElementById('concepto').value.trim();
+  const fecha        = document.getElementById('fecha').value;
+  const origen       = document.getElementById('origen').value;
+  const destino      = document.getElementById('destino').value;
+
+  if(!monto || monto <= 0){ alert('Ingresa un monto válido'); return; }
+  if(tipoActual !== 'transferencia' && !categoria){ alert('Selecciona una categoría'); return; }
+  if(!fecha){ alert('Selecciona fecha'); return; }
+  if(tipoActual === 'ingreso'  && !destino){ alert('Selecciona cuenta destino'); return; }
+  if(tipoActual === 'gasto'    && !origen) { alert('Selecciona cuenta origen');  return; }
+  if(tipoActual === 'transferencia' && (!origen || !destino)){ alert('Selecciona origen y destino'); return; }
+  if(tipoActual === 'transferencia' && origen === destino){ alert('Origen y destino deben ser diferentes'); return; }
+
+  // Si editamos, revertir el efecto financiero del movimiento original
+  if(editandoId){
+    const orig = datos.movimientos.find(m => m.id === editandoId);
+    if(orig){
+      if(orig.tipo === 'ingreso'){
+        const c = datos.cuentas.find(c => c.id === orig.destino);
+        if(c) c.saldo -= orig.monto;
+      } else if(orig.tipo === 'gasto'){
+        const c = datos.cuentas.find(c => c.id === orig.origen);
+        if(c) c.saldo += orig.monto;
+      } else if(orig.tipo === 'transferencia'){
+        const co = datos.cuentas.find(c => c.id === orig.origen);
+        const cd = datos.cuentas.find(c => c.id === orig.destino);
+        if(co) co.saldo += orig.monto;
+        if(cd) cd.saldo -= orig.monto;
+      }
+      datos.movimientos = datos.movimientos.filter(m => m.id !== editandoId);
+    }
+    editandoId = null;
+  }
+
+  if(tipoActual === 'gasto' || tipoActual === 'transferencia'){
+    const ctaOrigen = datos.cuentas.find(c => c.id === origen);
+    if(ctaOrigen && ctaOrigen.saldo < monto){
+      const alerta = document.getElementById('alertaSaldo');
+      alerta.classList.add('active');
+      alerta.scrollIntoView({behavior:'smooth', block:'nearest'});
+      return;
+    }
+  }
+
+  const movimiento = {
+    id:           Date.now().toString(),
+    tipo:         tipoActual,
+    monto,
+    categoria:    tipoActual === 'transferencia' ? null : (categoria || null),
+    subcategoria: tipoActual === 'transferencia' ? null : (subcategoria || null),
+    concepto,
+    fecha,
+    origen:  origen  || null,
+    destino: destino || null,
+    foto:    fotoBase64,
+    creado:  new Date().toISOString()
+  };
+
+  if(tipoActual === 'ingreso'){
+    datos.cuentas.find(c => c.id === destino).saldo += monto;
+  } else if(tipoActual === 'gasto'){
+    datos.cuentas.find(c => c.id === origen).saldo -= monto;
+  } else if(tipoActual === 'transferencia'){
+    datos.cuentas.find(c => c.id === origen).saldo  -= monto;
+    datos.cuentas.find(c => c.id === destino).saldo += monto;
+  }
+
+  datos.movimientos.push(movimiento);
+  guardarDatos();
+  cerrarModal();
+  renderCuentas();
+  renderMovimientos();
+  renderReportes();
+}
+
+// ==================== EDITAR MOVIMIENTO ====================
+function editarMovimiento(id){
+  const m = datos.movimientos.find(x => x.id === id);
+  if(!m) return;
+
+  editandoId  = id;
+  tipoActual  = m.tipo;
+
+  abrirModal();
+
+  setTimeout(() => {
+    setTipo(m.tipo);
+    document.getElementById('monto').value    = m.monto;
+    document.getElementById('concepto').value = m.concepto || '';
+    document.getElementById('fecha').value    = m.fecha;
+    if(m.origen)  document.getElementById('origen').value  = m.origen;
+    if(m.destino) document.getElementById('destino').value = m.destino;
+    if(m.categoria){
+      document.getElementById('categoria').value = m.categoria;
+      cargarSubcategorias();
+      if(m.subcategoria) document.getElementById('subcategoria').value = m.subcategoria;
+    }
+    if(m.foto){
+      fotoBase64 = m.foto;
+      const preview = document.getElementById('previewFoto');
+      preview.src   = m.foto;
+      preview.style.display = 'block';
+    }
+  }, 50);
+}
+
+// ==================== MOVIMIENTOS ====================
+// FIX: recibe el elemento botón para no depender del event global
+function filtrarMovimientos(filtro, el){
+  filtroActual = filtro;
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderMovimientos();
+}
+
+function renderMovimientos(){
+  const contenedor = document.getElementById('listaMovimientos');
+  let movs = [...datos.movimientos].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
+
+  if(filtroActual === 'ingreso') movs = movs.filter(m => m.tipo === 'ingreso');
+  if(filtroActual === 'gasto')   movs = movs.filter(m => m.tipo === 'gasto');
+  if(filtroActual === 'hoy'){
+    const hoy = new Date().toDateString();
+    movs = movs.filter(m => new Date(m.fecha).toDateString() === hoy);
+  }
+
+  if(movs.length === 0){
+    contenedor.innerHTML = '<div class="empty-state">Sin movimientos</div>';
+    return;
+  }
+
+  contenedor.innerHTML = movs.map(m => {
+    const cat        = m.categoria    ? datos.categorias.find(c => c.id === m.categoria)    : null;
+    const sub        = m.subcategoria ? datos.categorias.find(c => c.id === m.subcategoria) : null;
+    const ctaOrigen  = m.origen  ? datos.cuentas.find(c => c.id === m.origen)  : null;
+    const ctaDestino = m.destino ? datos.cuentas.find(c => c.id === m.destino) : null;
+
+    let detalleCuenta = '';
+    if(m.tipo === 'ingreso')       detalleCuenta = `→ ${ctaDestino?.nombre || ''}`;
+    else if(m.tipo === 'gasto')    detalleCuenta = `← ${ctaOrigen?.nombre  || ''}`;
+    else                           detalleCuenta = `${ctaOrigen?.nombre || ''} → ${ctaDestino?.nombre || ''}`;
+
+    // FIX: signo correcto por tipo; transferencias muestran ⇄
+    const signo    = m.tipo === 'ingreso' ? '+' : m.tipo === 'gasto' ? '-' : '⇄';
+    const etiqueta = cat ? `${cat.nombre}${sub ? ' › ' + sub.nombre : ''}` : 'Transferencia';
+
+    const fecha = new Date(m.fecha).toLocaleString('es-MX', {
+      day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'
+    });
+
+    return `
+      <div class="movimiento-item">
+        <div class="movimiento-acciones">
+          <button class="btn-icono" onclick="editarMovimiento('${m.id}')" title="Editar">✏️</button>
+          <button class="btn-icono" onclick="eliminarMovimiento('${m.id}')" title="Eliminar">🗑</button>
+        </div>
+        <div class="movimiento-header">
+          <span class="movimiento-categoria">${etiqueta}</span>
+          <span class="movimiento-monto ${m.tipo}">${signo}$${m.monto.toFixed(2)}</span>
+        </div>
+        ${m.concepto ? `<div class="movimiento-detalle">${m.concepto}</div>` : ''}
+        <div class="movimiento-detalle">${detalleCuenta}</div>
+        ${m.foto ? `<img src="${m.foto}" class="foto-recibo" onclick="toggleZoom(this)">` : ''}
+        <div class="movimiento-fecha">${fecha}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleZoom(img){
+  img.style.transform = img.style.transform === 'scale(2)' ? 'scale(1)' : 'scale(2)';
+}
+
+function eliminarMovimiento(id){
+  if(!confirm('¿Eliminar este movimiento?')) return;
+
+  const idx = datos.movimientos.findIndex(m => m.id === id);
+  if(idx === -1) return;
+
+  const m = datos.movimientos[idx];
+
+  if(m.tipo === 'ingreso'){
+    const c = datos.cuentas.find(c => c.id === m.destino);
+    if(c) c.saldo -= m.monto;
+  } else if(m.tipo === 'gasto'){
+    const c = datos.cuentas.find(c => c.id === m.origen);
+    if(c) c.saldo += m.monto;
+  } else if(m.tipo === 'transferencia'){
+    const co = datos.cuentas.find(c => c.id === m.origen);
+    const cd = datos.cuentas.find(c => c.id === m.destino);
+    if(co) co.saldo += m.monto;
+    if(cd) cd.saldo -= m.monto;
+  }
+
+  datos.movimientos.splice(idx, 1);
+  guardarDatos();
+  renderCuentas();
+  renderMovimientos();
+  renderReportes();
+}
+
+// ==================== REPORTES ====================
+function renderReportes(){
+  const ahora     = new Date();
+  const mesActual = ahora.getMonth();
+  const añoActual = ahora.getFullYear();
+
+  const movsMes = datos.movimientos.filter(m => {
+    const f = new Date(m.fecha);
+    return f.getMonth() === mesActual && f.getFullYear() === añoActual;
+  });
+
+  const ingresos = movsMes.filter(m => m.tipo === 'ingreso').reduce((a,m) => a + m.monto, 0);
+  const gastos   = movsMes.filter(m => m.tipo === 'gasto').reduce((a,m)   => a + m.monto, 0);
+  const balance  = ingresos - gastos;
+
+  const gastosPorCat = {};
+  movsMes.filter(m => m.tipo === 'gasto').forEach(m => {
+    const cat    = m.categoria ? datos.categorias.find(c => c.id === m.categoria) : null;
+    const nombre = cat ? cat.nombre : 'Sin categoría';
+    gastosPorCat[nombre] = (gastosPorCat[nombre] || 0) + m.monto;
+  });
+
+  let html = `
+    <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+      <div style="text-align:center;">
+        <div style="font-size:12px;color:#888;">Ingresos</div>
+        <div style="color:var(--green);font-size:20px;font-weight:bold;">+$${ingresos.toFixed(2)}</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:12px;color:#888;">Gastos</div>
+        <div style="color:var(--red);font-size:20px;font-weight:bold;">-$${gastos.toFixed(2)}</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:12px;color:#888;">Balance</div>
+        <div style="color:${balance >= 0 ? 'var(--green)' : 'var(--red)'};font-size:20px;font-weight:bold;">$${balance.toFixed(2)}</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:15px;">
+      <div style="font-size:12px;color:#888;margin-bottom:10px;">GASTOS POR CATEGORÍA</div>
+  `;
+
+  const sortedCats = Object.entries(gastosPorCat).sort((a,b) => b[1] - a[1]);
+
+  if(sortedCats.length === 0){
+    html += '<div style="opacity:0.5;text-align:center;padding:20px;">Sin gastos este mes</div>';
+  } else {
+    sortedCats.forEach(([nombre, monto]) => {
+      const porcentaje = gastos > 0 ? (monto / gastos * 100).toFixed(1) : 0;
+      html += `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
+          <span>${nombre}</span>
+          <div style="text-align:right;">
+            <div style="font-weight:bold;">$${monto.toFixed(2)}</div>
+            <div style="font-size:11px;color:#666;">${porcentaje}%</div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  html += '</div>';
+  document.getElementById('reporteMensual').innerHTML = html;
+}
+
+// ==================== INIT ====================
+cargarDatos();
+renderCuentas();
+renderMovimientos();
+renderReportes();
+
+document.getElementById('modalMovimiento').addEventListener('click', function(e){
+  if(e.target === this) cerrarModal();
+});
+document.getElementById('modalCuenta').addEventListener('click', function(e){
+  if(e.target === this) cerrarModalCuenta();
+});
+</script>
+
+</body>
+</html>
